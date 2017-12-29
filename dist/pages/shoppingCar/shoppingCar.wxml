@@ -56,7 +56,7 @@
     </checkbox-group>
 
     <!-- 提示 -->
-    <view class='shoppingtypes-view' wx:if="{{ paymentList.length > 0 }}">
+    <view class='shoppingtypes-view' wx:if="{{ shoppingtypes.length > 0 && paymentList.length > 0  }}">
       您可能还需要
       <block wx:for='{{ shoppingtypes }}' wx:key='{{ index }}'>
         <text>{{ item }}{{ index == shoppingtypes.length-1 ? '' : '、' }}</text>
