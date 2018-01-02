@@ -20,7 +20,8 @@ export function getBrandWCPayRequestParams(dic) {
 export function getBrandWCFinalyPayRequestParams(orderid, openid) {
   return urlencodePostRequest('pay/payed', {
     orderId: orderid,
-    openId: openid
+    openId: openid,
+    hotelId: +appConfig.hotelId
   });
 }
 

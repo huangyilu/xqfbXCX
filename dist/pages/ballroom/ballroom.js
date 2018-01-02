@@ -112,14 +112,14 @@ Page({
 //    console.log('reserveddate = ' + value);
       
     if (value) {
-        wx.navigateTo({
-          url: '../weddingTalent/weddingTalent?reservedDate=' + value
-        })
+      wx.navigateTo({
+        url: '../weddingTalent/weddingTalent?reservedDate=' + value
+      })
     } else {
-        // 弹窗选择日期
-        this.setData({
-          'reserveddateData.dateViewHidden': false
-        })
+      // 弹窗选择日期
+      this.setData({
+        'reserveddateData.dateViewHidden': false
+      })
     }
 
   },

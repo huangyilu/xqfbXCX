@@ -50,13 +50,15 @@ Page({
     var me = this;
     HotelDataService.queryDishesDetails(dishesId).then((result) => {
       // console.log("success = " + JSON.stringify(result.hotel));
-      console.log("queryDishesDetails success...");
+      // console.log("queryDishesDetails success...");
 
       me.setData({
         dishesResult: result,
         dishes: hoteldata.formatDishesDetails(result),
         dishesImgUrls: result.dishStyleList
       })
+
+      console.log("queryDishesDetails success..." + JSON.stringify(this.data.dishes));
 
     }).catch((error) => {
       console.log(error);

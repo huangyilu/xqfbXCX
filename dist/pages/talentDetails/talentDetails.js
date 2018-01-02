@@ -35,8 +35,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 综合评分
-//    this.getScoreStart(this.data.tatDetl.score);
+
     // 人才详情
     this.getTalentDetails(options.talentid);
       
@@ -86,16 +85,7 @@ Page({
       console.log(error);
     })
   },
-  getScoreStart(score) {
-    // var score = 3;
-    var starts = ['', '', '', '', ''];
-    for (var i = 0; i < score; i++) {
-      starts[i] = 'red';
-    }
-    this.setData({
-      score: starts
-    })
-  },
+
 
   // 点击事件
   bindMoreCommentTap () {
@@ -104,7 +94,7 @@ Page({
     HotelDataService.queryTalentComment(this.data.talentId).then((result) => {
       // console.log("queryTalentComment success = " + JSON.stringify(result));
       me.setData({
-        comments: hoteldata.formatTalentDetailComment(result)
+        comments: hoteldata.formaHotelCommentList(result)
       })
     }).catch((error) => {
       console.log(error);

@@ -125,6 +125,7 @@ export function authFromServer(authCode, userInfoResult) {
       method: 'GET',
       data: {
         "code": authCode,
+        "hotelId": +appConfig.hotelId
       },
       header: {
         'content-type': 'application/json'

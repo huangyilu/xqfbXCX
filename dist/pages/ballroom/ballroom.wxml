@@ -83,7 +83,7 @@
         <picker-view-column>
           <view class="picker-view" wx:for="{{ reserveddateData.picker_day }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
         </picker-view-column>
-      </picker-view> 
+      </picker-view>  
     </view>
     <!-- 按钮 -->
     <view class='weui-flex picker-btns'>

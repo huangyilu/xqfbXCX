@@ -35,18 +35,23 @@
     <block wx:for="{{ dishes.dishesList }}" wx:key="{{ index }}">
     <view class='textContent' >
       <text>{{ item.name }}</text>
-      <image class='delete-icon' wx:if="{{ edit == 1 }}" src='../../images/delete.png' id="{{ index }}" bindtap='bindTextDeleteTap'></image>
+      <!-- <image class='delete-icon' wx:if="{{ edit == 1 }}" src='../../images/delete.png' id="{{ index }}" bindtap='bindTextDeleteTap'></image> -->
+
+      <view class='name-view'>
+        <text></text>
+      </view>
+
     </view>
     </block>
 
-    <view class='add-view' bindtap='bindTextAddTap'>
+    <!-- <view class='add-view' bindtap='bindTextAddTap'>
       <image class='add-icon' wx:if="{{ edit == 1 }}" src='../../images/add.png'></image>
-    </view>
+    </view> -->
 
-    <view class='weui-flex save-view' wx:if="{{ edit == 1 }}">
+    <!-- <view class='weui-flex save-view' wx:if="{{ edit == 1 }}">
       <view class='weui-flex__item cancel'>取消</view>
       <view class='weui-flex__item save' bindtap='bindEditTextTap'>保存</view>
-    </view>
+    </view> -->
 
   </view>
 

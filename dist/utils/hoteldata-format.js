@@ -1,6 +1,6 @@
 
 import moment from './npm/moment';
-import { flattenDeep } from './npm/lodash-wx'
+import { flattenDeep, groupBy } from './npm/lodash-wx';
 import * as appConfig from '../app-config';
 
 // 酒店基本信息
@@ -273,7 +273,8 @@ export function formatDishesDetails (item) {
   return {
     name: item.combo.name,
     price: item.combo.price,
-    dishesList: item.dishStyleList
+    // dishesList: item.dishStyleList
+    dishesList: groupBy(item.dishStyleList, 'dishType')
   }
 }
 
@@ -467,7 +468,7 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
     } else if (item.title == '婚礼人才') {
       talentids.push(item.content.typeid);
       dic.talent = talentids.join(",");
-      console.log('talentid ... ' + dic.talent);
+      // console.log('talentid ... ' + dic.talent);
     } else if (item.title == '菜品') {
       dic.combo = item.content.typeid;
       dic.hallTable = hallTable;
