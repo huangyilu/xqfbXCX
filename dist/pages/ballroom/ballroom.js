@@ -125,7 +125,7 @@ Page({
   },
   goScheduleQueryPage (e) {
     wx.navigateTo({
-      url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid
+      url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&ballinfo=' + this.data.ballInfo
     })
   },
   goAppointmentSitePage () {
@@ -284,11 +284,6 @@ Page({
       'contacts.gender': e.detail.value
     })
   },
-  bindTablesChooseTap () {
-    this.setData({
-      tableHidden: false
-    })
-  },
   bindTableSliderChange (e) {
     this.setData({
       'ballInfo.tabNumsText': e.detail.value
@@ -308,31 +303,10 @@ Page({
     }
   },
   bindConfirmBtnTap (e) {
-    // if (e.currentTarget.dataset.type == 'table') {
-      // 检查是否选过桌数 保存桌数
-      // this.bindSaveTableNum();
-
-    // } else {
-
-      if (!this.data.reserveddateData.reserved) {
-        // 检查是否有选过 预订时间
-        this.bindSaveChooseTime();
-      }
-
-    // }
-  },
-  bindSaveTableNum () {
-    var value = wx.getStorageSync('ballTablenNum');
-    if (value) {
-      this.setData({
-        'ballInfo.tabNumsText': value
-      })
-    } else {
-      wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
+    if (!this.data.reserveddateData.reserved) {
+      // 检查是否有选过 预订时间
+      this.bindSaveChooseTime();
     }
-    this.setData({
-      tableHidden: true
-    })
   }
 
 })

@@ -12,33 +12,49 @@ const conf = {
     bodyhidden: true,
 		hasEmptyGrid: false,
 		showPicker: false,
-    preStr: '',
-    nextStr: '',
-    newDays: ''
+    preStrHidden: true,
+    nextStrHidden: false,
+    newDays: '',
+
+    // 联系人 方式
+    contacts: {
+      contact: '',
+      contactInformation: '',
+      gender: '女士'
+    },
+    // 性别
+    genderItems: [
+      { name: '女士', value: '女士', checked: 'true' },
+      { name: '先生', value: '先生' },
+    ],
+    // 桌数
+    ballInfo: {}
 	},
-	onLoad(option) {
+	onLoad (option) {
 
     this.setData({
-      hallId: option.hallid
+      hallId: option.hallid,
+      ballInfo: option.ballinfo
     })
+
+    console.log('ballinfo = ' + JSON.stringify(option.ballinfo));
+
     // 档期查询
     this.initDataOnCalendar();
 
 	},
+  // 初始化 日历
   initDataOnCalendar () {
     const date = new Date();
     const cur_year = date.getFullYear();
     const cur_month = date.getMonth() + 1;
     const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
     this.calculateEmptyGrids(cur_year, cur_month);
-    // this.calculateDays(cur_year, cur_month);
 
     this.getOldCalendarLuckydays(cur_year, cur_month);
 
     var start_date = cur_year + '-' + cur_month + '-' + date.getDate();
     var now_month = cur_month;
-    //转义字符 < >
-    this.setCalendarChangeBtn();
 
     this.setData({
       cur_year,
@@ -48,24 +64,15 @@ const conf = {
       now_month
     });
   },
-  setCalendarChangeBtn () {
-    var preStr = '&lt;';
-    preStr = preStr.replace(/&lt;/g, '<');
-    var nextStr = '&gt;';
-    nextStr = nextStr.replace(/&gt;/g, '>');
-    preStr = '';
-
-    this.setData({
-      preStr: preStr,
-      nextStr: nextStr
-    })
-  },
+  // 获取 月份 天数
 	getThisMonthDays(year, month) {
 		return new Date(year, month, 0).getDate();
 	},
+  // 获取 1 号 是周几
 	getFirstDayOfWeek(year, month) {
 		return new Date(Date.UTC(year, month - 1, 1)).getDay();
 	},
+  // 获取年月 前后 空格 数
 	calculateEmptyGrids(year, month) {
 		const firstDayOfWeek = this.getFirstDayOfWeek(year, month);
 		let empytGrids = [];
@@ -84,6 +91,7 @@ const conf = {
 			});
 		}
 	},
+  // 设置 年月日
   calculateDays(year, month, luckydays) {
 		let days = [];
     const date = new Date();
@@ -124,9 +132,9 @@ const conf = {
 			days
 		});
 	},
+  // 遍历吉日 获取老黄历
   getOldCalendarLuckydays(year, month) {
-    // 遍历吉日
-    //获取老黄历
+    
     var me = this;
     HotelDataService.queryScheduleList(year, month, me.data.hallId).then((result) => {
 
@@ -140,6 +148,7 @@ const conf = {
       console.log('fails');
     })
   },
+  // 点击 前一个月 后一个月
 	handleCalendar(e) {
 		var handle = e.currentTarget.dataset.handle;
 		var cur_year = this.data.cur_year;
@@ -153,7 +162,7 @@ const conf = {
       if (cur_month == this.data.now_month) {
         console.log('不可往后预约 ');
         this.setData({
-          preStr: ''
+          preStrHidden: true
         });
       } else {
         let newMonth = cur_month - 1;
@@ -164,7 +173,6 @@ const conf = {
         }
         console.log('-1 ');
 
-        // this.calculateDays(newYear, newMonth);
         this.getOldCalendarLuckydays(newYear, newMonth);
         this.calculateEmptyGrids(newYear, newMonth);
 
@@ -183,12 +191,11 @@ const conf = {
         newMonth = 1;
       }
       console.log('+1 ');
-      // this.calculateDays(newYear, newMonth);
       this.getOldCalendarLuckydays(newYear, newMonth);
       this.calculateEmptyGrids(newYear, newMonth);
 
       this.setData({
-        preStr: '<',
+        preStrHidden: false,
         cur_year: newYear,
         cur_month: newMonth
       });
@@ -196,19 +203,27 @@ const conf = {
     }
 		
 	},
+  // 点击某一天
 	tapDayItem(e) {
-		// const idx = e.currentTarget.dataset.idx;
-		// const days = this.data.days;
-    // var oldChooseDayIndex = this.data.oldChooseDayIndex;
+		const idx = e.currentTarget.dataset.idx;
+		const days = this.data.days;
+    var oldChooseDayIndex = this.data.oldChooseDayIndex;
 
-    // days[ oldChooseDayIndex ].choosed = false;
-		// days[ idx ].choosed = true;
-		// this.setData({
-		// 	days,
-    //   oldChooseDayIndex: idx,
-    //   newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + (idx+1)
-		// });
+    // 判断 是否 可预定 
+    if (!days[idx].reserved) {
+
+      days[oldChooseDayIndex].choosed = false;
+      days[idx].choosed = true;
+
+      this.setData({
+        days,
+        oldChooseDayIndex: idx,
+        newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + (idx + 1)
+      });
+    }
+
 	},
+  // 选择年月
 	chooseYearAndMonth() {
 		const cur_year = this.data.cur_year;
 		const cur_month = this.data.cur_month;
@@ -229,6 +244,7 @@ const conf = {
 			showPicker: true,
 		});
 	},
+  // 选择年月 滚轮
 	pickerChange(e) {
 		const val = e.detail.value;
 
@@ -236,7 +252,6 @@ const conf = {
     choose_month = val.split("-")[1];
 
     this.calculateEmptyGrids(choose_year, choose_month);
-    // this.calculateDays(choose_year, choose_month);
     this.getOldCalendarLuckydays(choose_year, choose_month);
 
     this.setData({
@@ -246,16 +261,48 @@ const conf = {
 
 	},
 
-  bindNextBtnTap () {
+  // 立即预约
+  bindConfirmBtnTap () {
 
-    if (this.data.navigationBarTitle == '预约看场') {
-      
-      console.log(this.data.newDays)
-    } else {
+    //保存桌数
+    // if (this.data.ballInfo.tabNumsText) {
+    //   wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
+    // }
+    
+    // // 保存联系人 信息
+    // wx.setStorageSync('contacts', this.data.contacts);
+    // // 保存预订 日期
+    // wx.setStorageSync('reservedDate', this.data.newDays);
 
-    }
+    console.log('newDays = ' + this.data.newDays);
+    console.log('contacts = ' + JSON.stringify(this.data.contacts));
+    console.log('ballTablenNum = ' + this.data.ballInfo.tabNumsText);
 
-  }
+
+  },
+
+  // 联系人信息 获取
+  bindContactInput(e) {
+    this.setData({
+      'contacts.contact': e.detail.value
+    })
+  },
+  bindContactInfoInput(e) {
+    this.setData({
+      'contacts.contactInformation': e.detail.value
+    })
+  },
+  bindGenderCheckboxChange(e) {
+    this.setData({
+      'contacts.gender': e.detail.value
+    })
+  },
+  bindTableSliderChange(e) {
+    this.setData({
+      'ballInfo.tabNumsText': e.detail.value
+    })
+  },
+
 };
 
 Page(conf);

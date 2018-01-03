@@ -315,10 +315,16 @@ page {
 
 /* 备注 提示 */
 .remarks-view {
-    margin-top: 50rpx;
-    padding: 20rpx;
+    margin: 10px;
     font-size: 26rpx;
-    color: #666666;
+    color: #999999;
+    text-align: left;
+    width: 100%;
+    padding: 20rpx;
+    background-color: rgba(245, 245, 245, 1);
+}
+.remarks-view text {
+    margin-left: 40rpx;
 }
 
 

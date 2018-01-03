@@ -6,13 +6,19 @@
         <!-- 头部 -->
         <view class="top-handle fs36 box box-lr box-align-center box-pack-center">
             <view class="prev box box-rl" bindtap="handleCalendar" data-handle="prev">
-                <view class="prev-handle box box-lr box-align-center box-pack-center">{{ preStr }}</view>
+                <view class="prev-handle box box-lr box-align-center box-pack-center">
+                <!-- {{ preStr }} -->
+                <image hidden='{{ preStrHidden }}' style='transform: rotate(180deg);' class='next-handle-icon' src='../../images/arrow-right.png'></image>
+                </view>
             </view>
             <picker class='date-area box box-lr box-align-center box-pack-center' mode="date" fields="month" value="{{ picker_value }}" start="{{ start_date }}" bindchange="pickerChange" bindtap="chooseYearAndMonth">
               {{ cur_year || "--" }} 年 {{ cur_month || "--" }} 月
             </picker>
             <view class="next box box-lr" bindtap="handleCalendar" data-handle="next">
-                <view class="next-handle box box-lr box-align-center box-pack-center">{{ nextStr }}</view>
+                <view class="next-handle box box-lr box-align-center box-pack-center">
+                  <!-- {{ nextStr }} -->
+                  <image hidden='{{ nextStrHidden }}' class='next-handle-icon' src='../../images/arrow-right.png'></image>
+                </view>
             </view>
         </view>
 
@@ -41,7 +47,46 @@
 
     </view>
 
-    <view class='remarks-view'>备注：灰色为不可预订</view>
+    <view class='remarks-view'>
+      <text>备注：灰色为不可预订</text>
+    </view>
+
+    <!-- 联系人 信息 -->
+    <view class='contactInfo-view'>
+      
+      <!-- 联系人 -->
+      <view class='contact-title'>
+        <text>联系人：</text>
+        <input bindinput="bindContactInput" placeholder='请填写联系人'></input>
+      </view>
+      <!-- 联系电话 -->
+      <view class='contact-title'>
+        <text>联系电话：</text>
+        <input bindinput="bindContactInfoInput" type='number' placeholder='请填写联系电话'></input>
+      </view>
+      <!-- 性别 -->
+      <view class='title'>
+        性别：
+        <radio-group bindchange="bindGenderCheckboxChange">
+          <label class="checkbox" wx:for="{{ genderItems }}" wx:key='{{ item.name }}'>
+            <radio value="{{ item.name }}" checked="{{ item.checked }}"/>{{ item.value }}
+          </label>
+        </radio-group>
+      </view>
+      <!-- 桌数 -->
+      <view class='title'>
+        <text class='slider-text'>桌数：</text>
+        <view class="slider-view">
+          <slider activeColor='#F15A4A' bindchange="bindTableSliderChange" min="{{ ballInfo.minTable }}" max="{{ ballInfo.maxTable }}" show-value/>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 立即预定 -->
+    <view class='foot-btn-view'>
+      <view class='foot-btn' bindtap='bindConfirmBtnTap'>立即预定</view>
+    </view>
 
 </view>
 
@@ -55,7 +100,7 @@
 <!-- 弹窗 -->
 
 <!-- 日期选择器 -->
-<view class='picker'>
+<!-- <view class='picker'>
   <picker-view class="flex" indicator-style="height: 50px;" value="{{ reserveddateData.picker_value }}" bindchange="pickerChange">
     <picker-view-column>
       <view class="picker-view" wx:for="{{ reserveddateData.picker_year }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
@@ -67,4 +112,4 @@
       <view class="picker-view" wx:for="{{ reserveddateData.picker_day }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
     </picker-view-column>
   </picker-view>  
-</view>
+</view> -->
