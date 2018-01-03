@@ -273,8 +273,7 @@ export function formatDishesDetails (item) {
   return {
     name: item.combo.name,
     price: item.combo.price,
-    // dishesList: item.dishStyleList
-    dishesList: groupBy(item.dishStyleList, 'dishType')
+    dishesList: item.dishStyleGroupList
   }
 }
 

@@ -69,7 +69,7 @@ Page({
 
     
 
-    console.log('reserveddateData.choose_day .. ' + this.data.reserveddateData.choose_day);
+    console.log('reserveddateData.choose_day .. ' + this.data.reserveddateData.choose_month);
 
     this.getBallroomDetails(options.ballroomid);
 
@@ -143,9 +143,9 @@ Page({
   pickerChange(e) {
     const val = e.detail.value;
 
-    var choose_year = this.data.reserveddateData.picker_year[val[0]],
-      choose_month = this.data.reserveddateData.picker_month[val[1]],
-      choose_day = this.data.reserveddateData.picker_day[val[2]];
+    var choose_year = this.data.reserveddateData.picker_year[val[0]] ? this.data.reserveddateData.picker_year[val[0]] : this.data.reserveddateData.choose_year,
+      choose_month = this.data.reserveddateData.picker_month[val[1]] ? this.data.reserveddateData.picker_month[val[1]] : this.data.reserveddateData.choose_month,
+      choose_day = this.data.reserveddateData.picker_day[val[2]] ? this.data.reserveddateData.picker_day[val[2]] : this.data.reserveddateData.choose_day;
 
     var dateString = choose_year + '-' + choose_month + '-' + choose_day;
     // 检测 日期 是否可预订

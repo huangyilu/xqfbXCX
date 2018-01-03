@@ -27,7 +27,11 @@ Page({
     shoppingcar: [],
     dishesResult: [],
 
-    dishesid: 0
+    dishesid: 0,
+
+    // 菜品弹窗
+    dishesTcHiddent: true,
+    dishesTc: {}
   },
 
   /**
@@ -140,6 +144,17 @@ Page({
       }
     })
 
+  },
+  bindDishesNameTap (e) {
+    this.setData({
+      dishesTcHiddent: false,
+      dishesTc: e.currentTarget.dataset.dishesinfo
+    })
+  },
+  bindCloseDishesDetailsTap () {
+    this.setData({
+      dishesTcHiddent: true,
+    })
   },
 
   checkShoppingCar() {

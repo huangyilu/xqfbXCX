@@ -1,11 +1,11 @@
 <!--pages/dishesDetails/dishesDetails.wxml-->
 
-<view wx:if='{{ dishes.dishesList.length > 0 }}'>
+<view  wx:if='{{ dishes.dishesList.length > 0 }}' >
 
 <view class='body' >
   
+  <!-- 头部 滚轮 -->
   <view class='title-img'>
-     <!-- <image mode='aspectFill' src='../../images/1.jpg'></image>  -->
   <view class='title-swiper-view'>
     <swiper autoplay="true" bindchange='bindDishesImgSwiperChange'>
     <block wx:for="{{ dishesImgUrls }}" wx:for-item='img' wx:key='{{ index }}'>
@@ -16,54 +16,31 @@
     </swiper>
   </view>
   <view class='title-bottom-view'>{{ dishesImgUrls[dishesImgIndex].name }}</view>
-
   </view>
 
+  <!-- 套餐名 -->
   <view class='title'>
     <text>{{ dishes.name }}</text>
     <text class='price'> ¥ {{ dishes.price }}</text>
     <image class='comment-icon' src='../../images/comment-gray.png' bindtap='goDishesCommentPage'></image>
   </view>
 
+  <!-- 各个菜品 -->
   <view class='textarea-view'>
-    <view class='textTitle'>
-      <text>菜单</text>
-      <!-- <image src='../../images/edit.png' bindtap='bindEditTextTap'></image> -->
-      <!-- <text class='saveBtn' wx:if="{{ edit == 1 }}" bindtap='bindEditTextTap'>保存</text> -->
-    </view>
-
-    <block wx:for="{{ dishes.dishesList }}" wx:key="{{ index }}">
-    <view class='textContent' >
-      <text>{{ item.name }}</text>
-      <!-- <image class='delete-icon' wx:if="{{ edit == 1 }}" src='../../images/delete.png' id="{{ index }}" bindtap='bindTextDeleteTap'></image> -->
-
-      <view class='name-view'>
-        <text></text>
+  <block wx:for="{{ dishes.dishesList }}" wx:key="{{ index }}">
+    <view class='textContent' wx:if='{{ item.list.length > 0 }}'>
+      <view class='typeName-view'>
+        <view class='line'>1</view>
+        <text>{{ item.name }}</text>
+        <view class='line'>1</view>
       </view>
-
-    </view>
-    </block>
-
-    <!-- <view class='add-view' bindtap='bindTextAddTap'>
-      <image class='add-icon' wx:if="{{ edit == 1 }}" src='../../images/add.png'></image>
-    </view> -->
-
-    <!-- <view class='weui-flex save-view' wx:if="{{ edit == 1 }}">
-      <view class='weui-flex__item cancel'>取消</view>
-      <view class='weui-flex__item save' bindtap='bindEditTextTap'>保存</view>
-    </view> -->
-
-  </view>
-
-  <!-- 弹窗 -->
-  <view class='input-bgview' hidden='{{ inputText }}'>
-    <view class='input-view'>
-      <input bindinput='bindKeyInput' placeholder="请输入一个菜名" type="text" focus="{{ inputTextFocus }}"/>
-      <view class='weui-flex btn-view' >
-        <view class='weui-flex__item cancel-btn' bindtap='bindCancelTap'>取消</view>
-        <view class='weui-flex__item define-btn' bindtap='bindDefineTap'>添加</view>
+      <view class='dishesName-view'>
+      <block wx:for='{{ item.list }}' wx:for-item='dishesInfo' wx:key='{{ index }}'>
+        <view data-dishesinfo='{{ dishesInfo }}' bindtap='bindDishesNameTap'>{{ dishesInfo.name }}</view>
+      </block>
       </view>
     </view>
+  </block> 
   </view>
 
   <!-- 附加信息 -->
@@ -76,6 +53,23 @@
 <view class='join-view'>
   <view class='join-btn' bindtap='bindJoinShoppingcarTap'>加入购物车</view>
 </view>
+
+<!-- 弹窗 查看 菜品详情 -->
+<view class='dishes-tc-view' hidden='{{ dishesTcHiddent }}'>
+  <view class='dishes-view'>
+  <!-- style='background-image: url( {{ dishesTc.img }} )' -->
+    <view class='img-view' >
+      <image mode='aspectFill' src='{{ dishesTc.img }}'></image>
+    </view> 
+    <view class='first-name'>{{ dishesTc.name }}</view>
+    <view class='details-view'>主要食材：<text>{{ dishesTc.ingredient }}</text></view>
+  </view>
+  <!-- 关闭 按钮 -->
+  <view class='close-icon-view'>
+    <image src='../../images/dis-hidden.png' bindtap='bindCloseDishesDetailsTap'></image>
+  </view>
+</view>
+
 
 
 </view>
