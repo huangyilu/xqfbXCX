@@ -3,6 +3,7 @@
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
 import * as AuthService from '../../services/auth-service';
+import { flattenDeep } from '../../utils/npm/lodash-wx';
 
 // var amapFile = require('../../libs/amap-wx.js');
 // var amapKey = '2a397d94c316bfaa79acf7397bcc4dbb';
@@ -27,7 +28,10 @@ const pageOptions = {
     weddingmenuNum: 0,
 
     // 宴会庆典
-    banquet: []
+    banquet: [],
+
+    // 婚礼人才
+    talents: []
   },
   //事件处理函数
   onLoad: function () {
@@ -73,6 +77,11 @@ const pageOptions = {
   goCelebrationListPage () {
     wx.navigateTo({
       url: '../celebrationDetails/celebrationList',
+    })
+  },
+  goTalentDetailsPage (e) {
+    wx.navigateTo({
+      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.id,
     })
   },
   // 点击事件
@@ -149,7 +158,10 @@ const pageOptions = {
         weddingmenu: hoteldata.formatWeddingmenu(result.comboList),
         weddingmenuNum: result.comboList.length,
         banquet: hoteldata.formatBanquet(result.celebrationList),
+        talents: flattenDeep(hoteldata.formatHomeTalent(result.talentList))
       })
+
+      console.log("talentList = " + JSON.stringify(this.data.talents));
 
       // 保存 预付定金比例
       wx.setStorageSync('prepayPercent', result.hotel.prepayPercent);

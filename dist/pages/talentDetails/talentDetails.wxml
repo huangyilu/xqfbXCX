@@ -6,12 +6,12 @@
 <view class='detailsBody' wx:if='{{ tatDetl != null }}'>
 
 <!-- 头部图片 -->
-<view class='title'>
+<view class='head-title'>
   <image class='title-bgimg' mode='aspectFill' src='../../images/1.jpg'></image> 
   <view class='title-boder-view'>
     <view class='title-boder'>
-      <text >婚礼人的一天</text>
-      <text style='display:block;'>2017.10</text>
+      <text >{{ tatDetl.perDesc }}</text>
+      <text style='display:block;'>{{ tatDetl.perTimer }}</text>
     </view>
   </view>
 </view>  
@@ -44,6 +44,27 @@
     <view class='comparison' bindtap='goTalentComparisonPage'>对比</view>
   </view>
   
+</view>
+
+<!-- 选择 使用时间 -->
+<view class='talent-time'>
+  <view class='img-title-arrow-cell' bindtap='bindSelectTalentTimeTap'>
+    <image class='left-icon' src='../../images/tal-time.png'></image>
+    <text class='left-text'>选择使用时间</text>
+    <image class='right-icon' src='../../images/arrow-right.png'></image>
+    <text class='right-text'>12:00-13:00</text>
+  </view>
+  <view class='talent-time-content'>
+    <view>档期已被占用时间</view>
+    <view class='talent-time-item' wx:for='{{ tatDetl.reservedList }}' wx:key='*this' wx:if='{{ tatDetl.reservedList.length > 0 }}' >
+      <text>{{ item }}</text>
+    </view>
+    <view style='color: #999999;' wx:if='{{ tatDetl.reservedList.length <= 0 }}'>无</view>
+    <view class='talent-time-icon'>
+      <image src='../../images/round.png'></image>
+      <text>请选择未被占用的时间</text>
+    </view>
+  </view>
 </view>
 
 <!-- 个人简介 -->
@@ -130,4 +151,11 @@
     <text>电话联系</text>
   </view>
   <view class='{{ tatDetl.freeStatus ? "appointment-btn" : "notAppointment-btn" }}' >{{ tatDetl.freeStatus ? "立即预约" : "已被预约" }}</view>
+</view>
+
+<!-- 选择 使用时间 弹窗 -->
+<view>
+
+
+
 </view>

@@ -1,5 +1,7 @@
 /* pages/weddingTalent/weddingTalent.wxss */
 
+@import '../../templates/dishes-item/dishes-item.wxss';
+
 .weui-tab__panel {
   margin-top: 45px;  
   background-color: white;
@@ -167,7 +169,7 @@
 }
 
 /* 菜品 */
-.dishe-img {
+/* .dishe-img {
   width: 100%;
   height: 200rpx; 
 }
@@ -197,7 +199,7 @@
   height: 25rpx;
   position: absolute;
   margin-top: 9rpx;
-}
+} */
 /* 结算 */
 .settlement-view {
   background-color: white;

@@ -2,6 +2,9 @@
 
 // import * as ScheduleDataService from '../../services/schedule-data-service';
 import * as HotelDataService from '../../services/hotel-service';
+import { Base64 } from '../../utils/urlsafe-base64';
+import * as hoteldata from '../../utils/hoteldata-format';
+import shoppingCarStore from '../../services/shopping-car-store';
 
 'use strict';
 let choose_year = null,
@@ -16,6 +19,8 @@ const conf = {
     nextStrHidden: false,
     newDays: '',
 
+    // 购物车
+    shoppingcar: [],
     // 联系人 方式
     contacts: {
       contact: '',
@@ -27,17 +32,29 @@ const conf = {
       { name: '女士', value: '女士', checked: 'true' },
       { name: '先生', value: '先生' },
     ],
+    // 宴会厅 数据
+    ballDetails: {},
     // 桌数
     ballInfo: {}
 	},
 	onLoad (option) {
 
+    let balldetailsqs = Base64.decode(option.balldetails)
+    let balldetailsObj = JSON.parse(balldetailsqs)
+    // console.log('***balldetailsObj... ' + JSON.stringify(balldetailsObj))
+
+    let ballinfoqs = Base64.decode(option.ballinfo)
+    let ballinfoObj = JSON.parse(ballinfoqs)
+    // console.log('***ballinfoObj... ' + JSON.stringify(ballinfoObj))
+    
     this.setData({
       hallId: option.hallid,
-      ballInfo: option.ballinfo
+      ballDetails: balldetailsObj,
+      ballInfo: ballinfoObj
     })
 
-    console.log('ballinfo = ' + JSON.stringify(option.ballinfo));
+    // 查看购物车
+    this.checkShoppingCar();
 
     // 档期查询
     this.initDataOnCalendar();
@@ -208,6 +225,7 @@ const conf = {
 		const idx = e.currentTarget.dataset.idx;
 		const days = this.data.days;
     var oldChooseDayIndex = this.data.oldChooseDayIndex;
+    var curDay = idx + 1;
 
     // 判断 是否 可预定 
     if (!days[idx].reserved) {
@@ -215,10 +233,17 @@ const conf = {
       days[oldChooseDayIndex].choosed = false;
       days[idx].choosed = true;
 
+      if (this.data.cur_month < 10) {
+        this.data.cur_month = '0' + this.data.cur_month;
+      }
+      if (curDay < 10) {
+        curDay = '0' + curDay;
+      }
+
       this.setData({
         days,
         oldChooseDayIndex: idx,
-        newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + (idx + 1)
+        newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + curDay
       });
     }
 
@@ -261,24 +286,63 @@ const conf = {
 
 	},
 
+  checkShoppingCar() {
+    shoppingCarStore.get('shoppingcar').then(result => {
+
+      console.log('shoppingcar...' + JSON.stringify(result));
+      this.setData({
+        shoppingcar: result
+      })
+
+    }).catch(error => {
+      console.log(error);
+    });
+  },
   // 立即预约
   bindConfirmBtnTap () {
 
-    //保存桌数
-    // if (this.data.ballInfo.tabNumsText) {
-    //   wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
-    // }
-    
-    // // 保存联系人 信息
-    // wx.setStorageSync('contacts', this.data.contacts);
-    // // 保存预订 日期
-    // wx.setStorageSync('reservedDate', this.data.newDays);
+    // 判断 是否 全部都选择了
+    if (this.data.newDays == '') {
+      this.showModalContent('请选择预订日期！');
+    } 
+    // else if (this.data.contacts.contact == '') {
+    //   this.showModalContent('请填写联系人！');
+    // } 
+    // else if (this.data.contacts.contactInformation == '') {
+    //   this.showModalContent('请填写联系电话！');
+    // } 
+    else {
+      //保存桌数
+      // wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
+      // // 保存联系人 信息
+      // wx.setStorageSync('contacts', this.data.contacts);
+      // 保存预订 日期
+      wx.setStorageSync('reservedDate', this.data.newDays);
+      // // 宴会厅加入购物车
+      // this.joinShoppingCar();
+  
+      wx.navigateTo({
+        url: '../weddingTalent/weddingTalent?reservedDate=' + this.data.newDays
+      })
+    }
 
     console.log('newDays = ' + this.data.newDays);
     console.log('contacts = ' + JSON.stringify(this.data.contacts));
     console.log('ballTablenNum = ' + this.data.ballInfo.tabNumsText);
 
-
+  },
+  showModalContent (content) {
+    wx.showModal({
+      title: '提示！',
+      content: content,
+    })
+  },
+  // 宴会厅加入购物车
+  joinShoppingCar() {
+    var balldetails = hoteldata.formatLocalShoppingcar(this.data.ballDetails, '宴会厅');
+    var newShoppingcar = this.data.shoppingcar;
+    newShoppingcar.push(balldetails);
+    shoppingCarStore.save('shoppingcar', newShoppingcar);
   },
 
   // 联系人信息 获取

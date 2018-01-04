@@ -70,11 +70,15 @@ page {
     float: right;
     margin-top: 20rpx; 
 }
-.img-title-arrow-cell .title {
+.img-title-arrow-cell .left-text {
     float: left; 
-    /* color: #666; */
     margin-top: 15rpx; 
     margin-left: 20rpx;
+}
+.img-title-arrow-cell .right-text {
+    float: right;
+    margin-top: 15rpx; 
+    margin-right: 20rpx;
 }
 .img-title-arrow-cell view {
     padding: 30rpx 0;

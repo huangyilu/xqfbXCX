@@ -15,7 +15,7 @@ Page({
     windowHeight: '',
     navbarSliderHidden: false,
 
-    navbarTabs: ['婚礼人才','菜品'],
+    navbarTabs: ['菜品','婚礼人才','宴会庆典'],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -56,16 +56,16 @@ Page({
       reservedDate: options.reservedDate ? options.reservedDate : 0
     });
 
-    if (options.type == "dishes") {
-      this.setData({
-        activeIndex: 1
-      });
-      // 菜品 数据
-      this.getDishesList();
-    } else {
-      //婚礼人才 数据
-      this.getTalentList(options.reservedDate);
-    }
+    // if (options.type == "dishes") {
+    //   this.setData({
+    //     activeIndex: 1
+    //   });
+    // 菜品 数据
+    this.getDishesList();
+    // } else {
+    //   //婚礼人才 数据
+    //   this.getTalentList(options.reservedDate);
+    // }
 
     this.getShoppingCarInStore();
     
@@ -121,20 +121,28 @@ Page({
   bindNavbarTabTap: function (e) {
     // console.log(e.currentTarget.offsetLeft);
 
-    if (e.currentTarget.id == 1) {
-      // 菜品 数据
-      if (this.data.disheList.length <= 0) { 
-        this.getDishesList();
-      }
-
-    } else {
-
-      if (this.data.talentList.length <= 0) {
-        //婚礼人才 数据
-        this.getTalentList(this.data.reservedDate);
-      }
-
+    switch (+e.currentTarget.id) 
+    {
+      case 0:
+        // 菜品 数据
+        if (this.data.disheList.length <= 0) {
+          this.getDishesList();
+        }
+      break;
+      case 1:
+        if (this.data.talentList.length <= 0) {
+          //婚礼人才 数据
+          this.getTalentList(this.data.reservedDate);
+        }
+      break;
+      case 1:
+        if (this.data.talentList.length <= 0) {
+          //宴会庆典 数据
+          this.getTalentList(this.data.reservedDate);
+        }
+      break;
     }
+
     this.setData({
       activeIndex: e.currentTarget.id,
     });

@@ -5,6 +5,7 @@ import * as HotelDataService from '../../services/hotel-service';
 import shoppingCarStore from '../../services/shopping-car-store';
 import contactsInfoStore from '../../services/contacts-info-store';
 import moment from '../../utils/npm/moment';
+import { Base64 } from '../../utils/urlsafe-base64';
 
 Page({
 
@@ -125,7 +126,7 @@ Page({
   },
   goScheduleQueryPage (e) {
     wx.navigateTo({
-      url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&ballinfo=' + this.data.ballInfo
+      url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
     })
   },
   goAppointmentSitePage () {

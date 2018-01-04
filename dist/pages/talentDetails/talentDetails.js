@@ -3,7 +3,8 @@
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
 import contactsInfoStore from '../../services/contacts-info-store';
-import { Base64 } from '../../utils/urlsafe-base64'
+import { Base64 } from '../../utils/urlsafe-base64';
+import moment from '../../utils/npm/moment';
 
 Page({
 
@@ -66,6 +67,10 @@ Page({
     this.setData({
         reserveddate: reserveddate
     })
+
+    if (reserveddate == '') {
+      reserveddate = moment().format('YYYY-MM-DD');
+    }
     
     // 基本信息
     HotelDataService.queryTalentDetails(talentId, reserveddate).then((result) => {
@@ -104,6 +109,12 @@ Page({
     wx.makePhoneCall({
       phoneNumber: this.data.tatDetl.phonecall,
     })
+  },
+  // 选择 使用时间
+  bindSelectTalentTimeTap () {
+    
+    
+
   },
 
   // 跳转

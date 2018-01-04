@@ -65,6 +65,27 @@ export function formatHotelCommentListItem(item) {
   }
 }
 
+// 首页婚礼人才
+export function formatHomeTalent (list) {
+  return list.map(item => this.formatHomeTalentItem(item))
+}
+export function formatHomeTalentItem (item) {
+  return item.talentList.length >= 2 ? this.formatHomeTalentList(this.getTheTopN(item.talentList, 2)) : this.formatHomeTalentList(item.talentList)
+}
+export function formatHomeTalentList (list) {
+  return list.map(item => this.formatHomeTalentListItem(item))
+}
+export function formatHomeTalentListItem (item) {
+  return {
+    talentid: item.weddingTalentId,
+    name: item.name,
+    occupation: item.occupation,
+    headImg: item.headImg,
+    goodReputation: item.goodReputation + '%',
+    experience: item.experience
+  }
+}
+
 // 婚礼人才
 export function formatWeddingTalentLeftTab (result) {
   var arr = [];
@@ -105,9 +126,20 @@ export function formatTalentDetails(result) {
     mypics: result.pictureList.length > 0 ? this.getTheTopN(result.pictureList, 3) : [],
     myvideos: result.mediaList.length > 0 ? this.getTheTopN(result.mediaList, 3) : [],
     introduce: result.talent.introduction,
-    freeStatus: result.talent.freeStatus
+    freeStatus: result.talent.freeStatus,
+    perDesc: result.talent.personalDeclaration ? result.talent.personalDeclaration : '婚礼人的一天',
+    perTimer: moment().format('YYYY-MM'),
+    reservedList: this.formatReservedList(result.tReservedList)
   }
 }
+// 人才详情 已被占用时间
+export function formatReservedList(list) {
+  return list.map(item => this.formatReservedItem(item));
+}
+export function formatReservedItem(item) {
+  return item.start_time + '-' + item.end_time
+}
+
 // 人才 详情评论
 export function formatTalentDetailComment (list) {
   return list.map(comt => this.formatTalentDetailCommentItem(comt));

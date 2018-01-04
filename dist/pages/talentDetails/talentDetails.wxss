@@ -1,4 +1,5 @@
 /* pages/talentDetails/talentDetails.wxss */
+
 @import '../../templates/comment-item/comment-item.wxss';
 @import '../../templates/scorestart/scorestart.wxss';
 
@@ -9,7 +10,7 @@
     padding-bottom: 200px; */
     margin-bottom: 90rpx;
 }
-.title {
+.head-title {
     width: 100%;
     height: 400rpx;
     display: block;
@@ -79,6 +80,37 @@
     float: left;
 }
 
+/* 选择时间 */
+.talent-time {
+  margin-bottom: 20rpx;
+}
+.left-text {
+  font-size: 30rpx;
+}
+.talent-time-content {
+    font-size: 28rpx;
+    background-color: white;
+    padding-bottom: 15rpx;
+}
+.talent-time-content view {
+    margin-left: 70rpx;
+    padding: 15rpx 0 0;
+}
+.talent-time-item text{
+    margin-right: 40rpx;
+    color: #999999;
+}
+.talent-time-icon image{
+    width: 24rpx;
+    height: 24rpx;
+    float: left;
+    margin-top: 8rpx;
+    margin-right: 10rpx;
+}
+.talent-time-icon text {
+    font-size: 24rpx;
+    color: #999999;
+}
 
 /* 个人简介 */
 .talent-desc {
