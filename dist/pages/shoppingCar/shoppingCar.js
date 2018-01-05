@@ -58,7 +58,10 @@ Page({
     genderItems: [
       { name: '女士', value: '女士', checked: 'true' },
       { name: '先生', value: '先生' },
-    ]
+    ],
+
+    // 是否 同时选了人才 和庆典 全部准备好 预约下单
+    isGetReadyMakeAppoint: true
   },
 
   onShow: function () {
@@ -105,7 +108,18 @@ Page({
     result.forEach(item => {
       if (item.title == '婚礼人才') {
         shoppingtyppes.push(item.content.info.talentname);
+
+        if (item.title == '宴会庆典') {
+   
+        } else {
+          // 如果没选庆典 则不可下单
+          this.setData({
+            isGetReadyMakeAppoint: true
+          })
+        }
+
       } else {
+
         shoppingtyppes.push(item.title);
       }
     })
@@ -391,8 +405,16 @@ Page({
           content: '您还有未付定金的订单！请付款后再下单！',
         })
       } else {
-        // 上传 资料
-        this.bindUploadPrepay();
+        // 判断 是否 同时选了人才 和庆典 
+        if (this.data.isGetReadyMakeAppoint) {
+          // 上传 资料
+          this.bindUploadPrepay();
+        } else {
+          wx.showModal({
+            title: '提示！',
+            content: '选了人才一定要选宴会庆典哦！',
+          })
+        }
       }
     }
   },

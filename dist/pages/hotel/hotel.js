@@ -64,24 +64,24 @@ const pageOptions = {
       url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id
     })
   },
-  goWeddingTalentPage() {
-    wx.navigateTo({
-      url: '../weddingTalent/weddingTalent?type=dishes'
-    })
-  },
+  // goWeddingTalentPage() {
+  //   wx.navigateTo({
+  //     url: '../weddingTalent/weddingTalent?type=dishes' 
+  //   })
+  // },
   goDishesDetailsPage (e) {
     wx.navigateTo({
-      url: '../dishesDetails/dishesDetails?dishesid=' + e.currentTarget.id,
+      url: '../dishesDetails/dishesDetails?dishesid=' + e.currentTarget.id + '&prepagetype=home',
     })
   },
   goCelebrationListPage () {
     wx.navigateTo({
-      url: '../celebrationDetails/celebrationList',
+      url: '../celebrationDetails/celebrationList?prepagetype=home',
     })
   },
   goTalentDetailsPage (e) {
     wx.navigateTo({
-      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.id,
+      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.id + '&prepagetype=home',
     })
   },
   // 点击事件

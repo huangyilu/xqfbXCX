@@ -78,7 +78,7 @@ Page({
     this.setThisMonthPicArr();
 
     // 查看购物车
-    this.checkShoppingCar();
+    this.getShoppingCarData();
 
 
   },
@@ -125,9 +125,19 @@ Page({
 
   },
   goScheduleQueryPage (e) {
-    wx.navigateTo({
-      url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
-    })
+
+    // 判断 购物车是否已有宴会厅 询问是否 替换宴会厅
+    if (this.checkShoppingCar()) {
+      // 替换宴会厅 并进入下一页
+      // 宴会厅 加入购物车
+      this.joinShoppingCar();
+      // wx.navigateTo({
+      //   url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
+      // })
+    } else {
+      console.log('sssssss');
+    }
+
   },
   goAppointmentSitePage () {
     wx.navigateTo({
@@ -235,7 +245,42 @@ Page({
     }
   },
   
-  checkShoppingCar () {
+  checkShoppingCar() {
+    var shoppingcar = this.data.shoppingcar;
+    for (var i = 0; i < shoppingcar.length; i++) {
+      if (shoppingcar[i].title == '宴会厅') {
+
+        wx.showModalAsync({
+          title: '提示',
+          content: '是否替换已有宴会厅？',
+        }).then((res) => {
+          if (res.cancel) {
+            console.log('取消')
+          } else if (res.confirm) {
+            console.log('确定')
+            // 删除 购物车的 宴会厅
+            remove(shoppingcar, function (n) {
+              return n.title == '宴会厅';
+            });
+            // 加入新的 宴会厅
+            this.joinShoppingCar();
+            // wx.navigateTo({
+            //   url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
+            // })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+
+      }
+    }
+
+    // return isballroom;
+    this.setData({
+      shoppingcar: shoppingcar
+    })
+  },
+  getShoppingCarData () {
     shoppingCarStore.get('shoppingcar').then(result => {
 
       console.log('shoppingcar...' + JSON.stringify(result));
@@ -253,6 +298,43 @@ Page({
     newShoppingcar.push(balldetails);
     shoppingCarStore.save('shoppingcar', newShoppingcar);
   },
+  // 过滤购物车
+  formatShoppingCar(talentinfo, talenttype) {
+
+    var shoppingcar = this.data.shoppingcar;
+    var talenttypes = shoppingcars.talenttypes;
+    var shoppinglist = shoppingcars.shoppinglist;
+    shoppingcars.shoppingtime = moment().format('YYYY-MM-DD');
+
+    // 如果已经有这个类别了，购物车就不再+1，且替换原来已有的人
+    if (talenttypes.length > 0) {
+
+      for (var i = 0; i < talenttypes.length; i++) {
+        var types = talenttypes[i];
+        if (types != talenttype) {
+          talenttypes.push(talenttype);
+          shoppinglist.push(talentinfo);
+          break;
+        } else {
+          // 替换已有类别的人
+          var tylength = talenttypes.length - 1;
+          shoppinglist[tylength] = talentinfo;
+          break;
+        }
+      }
+
+    } else {
+      talenttypes.push(talenttype);
+      shoppinglist.push(talentinfo);
+    }
+
+    this.setData({
+      shoppingcars: shoppingcars
+    })
+
+    console.log('替换 宴会厅 后最终购物车：' + JSON.stringify(shoppinglist));
+  },
+
   saveLocalChooseTime (chooseTime) {
     wx.setStorage({
       key: "reservedDate",

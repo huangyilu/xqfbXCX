@@ -135,7 +135,7 @@ Page({
           this.getTalentList(this.data.reservedDate);
         }
       break;
-      case 1:
+      case 2:
         if (this.data.talentList.length <= 0) {
           //宴会庆典 数据
           this.getTalentList(this.data.reservedDate);

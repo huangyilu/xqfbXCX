@@ -137,7 +137,7 @@ export function formatReservedList(list) {
   return list.map(item => this.formatReservedItem(item));
 }
 export function formatReservedItem(item) {
-  return item.start_time + '-' + item.end_time
+  return item.startTimeString + '-' + item.endTimeString
 }
 
 // 人才 详情评论
@@ -441,14 +441,16 @@ export function getCelebrationPrice(packageStage) {
 }
 
 // 保存本地购物车 格式
-export function formatLocalShoppingcar(item, name, tableNum, packageStage) {
+export function formatLocalShoppingcar(item, name, tableNum, packageStage, startTime, endTime) {
   return {
     title: name,
     content: {
       typeid: this.getLocalShoppingId(name, item),
       info: item,
       tableNum: tableNum ? tableNum : null,
-      packageStage: packageStage ? packageStage : null
+      packageStage: packageStage ? packageStage : null,
+      startTime: startTime ? startTime : null,
+      endTime: endTime ? endTime : null
     },
     selected: true
   }
@@ -497,9 +499,10 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
     if (item.title == '宴会厅') {
       dic.hall = item.content.typeid;
     } else if (item.title == '婚礼人才') {
-      talentids.push(item.content.typeid);
+      talentids.push(item.content.typeid  + ';' + item.content.startTime + ';' + item.content.endTime);
       dic.talent = talentids.join(",");
-      // console.log('talentid ... ' + dic.talent);
+
+      console.log('talentids ... ' + dic.talent);
     } else if (item.title == '菜品') {
       dic.combo = item.content.typeid;
       dic.hallTable = hallTable;

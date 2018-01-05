@@ -47,12 +47,13 @@
 </view>
 
 <!-- 选择 使用时间 -->
-<view class='talent-time'>
+<!-- hidden='{{ prePageType == "home" }}' -->
+<view class='talent-time' >
   <view class='img-title-arrow-cell' bindtap='bindSelectTalentTimeTap'>
     <image class='left-icon' src='../../images/tal-time.png'></image>
     <text class='left-text'>选择使用时间</text>
     <image class='right-icon' src='../../images/arrow-right.png'></image>
-    <text class='right-text'>12:00-13:00</text>
+    <text class='right-text'>{{ selectTimes.startTime ? selectTimes.startTime + '-' : '' }}{{ selectTimes.endTime }}</text>
   </view>
   <view class='talent-time-content'>
     <view>档期已被占用时间</view>
@@ -150,12 +151,44 @@
     <image src='../../images/phone.png'></image>
     <text>电话联系</text>
   </view>
-  <view class='{{ tatDetl.freeStatus ? "appointment-btn" : "notAppointment-btn" }}' >{{ tatDetl.freeStatus ? "立即预约" : "已被预约" }}</view>
+  <!-- hidden='{{ prePageType == "home" }}' -->
+  <view class='{{ tatDetl.freeStatus ? "appointment-btn" : "notAppointment-btn" }}' bindtap='bindApptmentTap'>{{ tatDetl.freeStatus ? "立即预约" : "已被预约" }}</view>
 </view>
 
 <!-- 选择 使用时间 弹窗 -->
-<view>
+<view class='select-time-picker-bgview' hidden='{{ selectTimes.selectTimePickerHidden }}'>
+  <view class='select-time-view'>
+    <view class='weui-flex title-view'>
+      <view class='weui-flex__item' style='text-align:left;' bindtap='bindSelectTimeCancelTap'>取消</view>
+      <view class='weui-flex__item'>{{ selectTimes.reservedDate }}</view>
+      <view class='weui-flex__item' style='text-align:right;' bindtap='bindSelectTimeConfirmTap'>确定</view>
+    </view>
 
+    <!-- 选择器 -->
+    <view class='time-picker-bgview'>
+      <picker-view indicator-class="time-picker-column-view"  value="{{ selectTimeValue }}" bindchange="bindTimePickerChange">
+        <!-- 开始时间 -->
+        <picker-view-column>
+          <view>开始</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{ selectTimes.startHour }}" wx:key='*this'>{{ item }}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{ selectTimes.startMint }}" wx:key='*this'>{{ item }}</view>
+        </picker-view-column>
+        <!-- 结束时间 -->
+        <picker-view-column>
+          <view>结束</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{ selectTimes.endHour }}" wx:key='*this'>{{ item }}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{ selectTimes.endMint }}" wx:key='*this'>{{ item }}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
 
-
+  </view>
 </view>

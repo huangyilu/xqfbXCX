@@ -57,7 +57,7 @@ const methodNamesToPromisify = [
   // 'notifyBLECharacteristicValueChange',
   // 'showToast',
   // 'showLoading',
-  // 'showModal',
+  'showModal',
   // 'showActionSheet',
   // 'setNavigationBarTitle',
   // 'navigateTo',
