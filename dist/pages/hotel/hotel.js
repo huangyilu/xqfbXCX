@@ -61,7 +61,7 @@ const pageOptions = {
   },
   goCelebrationDetailsPage (e) {
     wx.navigateTo({
-      url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id
+      url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id + '&prepagetype=home'
     })
   },
   // goWeddingTalentPage() {
@@ -84,6 +84,12 @@ const pageOptions = {
       url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.id + '&prepagetype=home',
     })
   },
+  goTalentListPage () {
+    wx.navigateTo({
+      url: '../talentDetails/talentListView',
+    })
+  },
+
   // 点击事件
   bindBallroomTap: function () {
 

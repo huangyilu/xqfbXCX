@@ -50,7 +50,7 @@
 
 </view>
 
-<view class='join-view'>
+<view class='join-view' hidden='{{ prepagetype == "home" }}'>
   <view class='join-btn' bindtap='bindJoinShoppingcarTap'>加入购物车</view>
 </view>
 

@@ -70,9 +70,8 @@
 .comment-icon {
     width: 60rpx;
     height: 60rpx;
-    margin-left: 20rpx;
+    margin: 20rpx;
     float: left;
-    margin-top: 20rpx;
 }
 .appointment-btn {
     padding: 10rpx 0;

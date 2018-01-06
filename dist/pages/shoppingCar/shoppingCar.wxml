@@ -26,13 +26,8 @@
         </view>
         <view class='price'>
           ¥ {{ pay.price }} 
-          <!-- {{ pay.packageStage.stage == true ? ' ( 不含全息价:¥' + pay.packageStage.stageprice + ' )' : '' }} -->
+           {{ pay.packageStage.stageprice == '价格面议' ? ' (价格面议) ' : '' }} 
           <text class='second-txt-color' style='float:right;'>x{{ pay.nums }} {{ pay.finalTableNum ? '桌' : '' }}</text> 
-          <!-- 选桌数 按钮 -->
-          <!-- <view class='tableNum-view' wx:if='{{ pay.tableNum }}'>
-            <text class='choose-tables-btn' bindtap='bingSelectTableNumTap'>选桌数</text>
-            <text class='second-txt-color'>x{{ pay.tableNum }}</text> 
-          </view> -->
           
           </view>
       </view>

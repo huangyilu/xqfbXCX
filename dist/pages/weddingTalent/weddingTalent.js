@@ -33,6 +33,9 @@ Page({
     disheList: [],
     disheSelectedIndex: -1,
 
+    // 宴会庆典
+    celebrationList: [],
+
     // 结算
     totalPrice: '2333',
     shoppingCarNumbHidden: true,
@@ -56,16 +59,8 @@ Page({
       reservedDate: options.reservedDate ? options.reservedDate : 0
     });
 
-    // if (options.type == "dishes") {
-    //   this.setData({
-    //     activeIndex: 1
-    //   });
     // 菜品 数据
     this.getDishesList();
-    // } else {
-    //   //婚礼人才 数据
-    //   this.getTalentList(options.reservedDate);
-    // }
 
     this.getShoppingCarInStore();
     
@@ -107,6 +102,16 @@ Page({
       console.log(error);
     })
   },
+  getCelebrationList () {
+    HotelDataService.queryCelebrationList().then((result) => {
+      //庆典 数据
+      this.setData({
+        celebrationList: hoteldata.formatBanquet(result),
+      })
+    }).catch((error) => {
+      console.log(error);
+    })
+  },
   getShoppingCarInStore () {
     shoppingCarStore.get('shoppingcar').then(result => {
       this.setData({
@@ -136,9 +141,9 @@ Page({
         }
       break;
       case 2:
-        if (this.data.talentList.length <= 0) {
+        if (this.data.celebrationList.length <= 0) {
           //宴会庆典 数据
-          this.getTalentList(this.data.reservedDate);
+          this.getCelebrationList();
         }
       break;
     }
@@ -269,6 +274,11 @@ Page({
   goDishesDetailsPage (e) {
     wx.navigateTo({
       url: '../dishesDetails/dishesDetails?dishesid=' + e.currentTarget.id,
+    })
+  },
+  goCelebrationDetailsPage(e) {
+    wx.navigateTo({
+      url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id
     })
   },
   goSettlementPage () {

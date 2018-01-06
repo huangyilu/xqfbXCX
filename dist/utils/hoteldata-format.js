@@ -330,8 +330,8 @@ export function formatCelebrationDetailsCheckbox (item) {
       checked: true,
       stage: true,
       notStage: false,
-      stagePrice: item.stagePrice,
-      value: item.preprice,
+      stagePrice: item.isShowPrice == '是' ? item.stagePrice : '价格面议',
+      value: item.isShowPrice == '是' ? item.preprice : '价格面议',
       stagevalue: 0
     },
     {
@@ -339,8 +339,8 @@ export function formatCelebrationDetailsCheckbox (item) {
       checked: false,
       stage: false,
       notStage: false,
-      stagePrice: item.stagePrice,
-      value: item.price,
+      stagePrice: item.isShowPrice == '是' ? item.stagePrice : '价格面议',
+      value: item.isShowPrice == '是' ? item.price : '价格面议',
       stagevalue: 0
     }
   ]
@@ -351,9 +351,9 @@ export function formatCelebrationDetails(item) {
     showImgs: item.images,
     styles: item.style,
     theme: item.theme,
-    basicPrice: item.preprice,
+    basicPrice: item.isShowPrice == '是' ? item.preprice : '价格面议',
     comboname: item.comboname,
-    luxuryPrice: item.price,
+    luxuryPrice: item.isShowPrice == '是' ? item.price : '价格面议',
     celeDesc: [
       {
         name: '迎宾区',
@@ -436,6 +436,9 @@ export function getCelebrationPrice(packageStage) {
   var price = packageStage.packPrice;
   if (packageStage.stage) {
     price = packageStage.packPrice + packageStage.stageprice
+    if (packageStage.packPrice == '价格面议') {
+      price = 0
+    }
   }
   return price;
 }

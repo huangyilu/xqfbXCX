@@ -7,6 +7,8 @@ import contactsInfoStore from '../../services/contacts-info-store';
 import moment from '../../utils/npm/moment';
 import { Base64 } from '../../utils/urlsafe-base64';
 
+import { remove } from '../../utils/npm/lodash-wx';
+ 
 Page({
 
   /**
@@ -247,38 +249,52 @@ Page({
   
   checkShoppingCar() {
     var shoppingcar = this.data.shoppingcar;
-    for (var i = 0; i < shoppingcar.length; i++) {
-      if (shoppingcar[i].title == '宴会厅') {
+    var isBallroom = false;
+    var me = this;
+    shoppingcar.forEach(item => {
+      if (item.title == '宴会厅') {
+        isBallroom = true;
+      }
+    })
 
-        wx.showModalAsync({
-          title: '提示',
-          content: '是否替换已有宴会厅？',
-        }).then((res) => {
-          if (res.cancel) {
-            console.log('取消')
-          } else if (res.confirm) {
-            console.log('确定')
+    if (isBallroom) {
+
+      wx.showModal({
+        title: '提示',
+        content: '是否替换已有宴会厅？',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
             // 删除 购物车的 宴会厅
             remove(shoppingcar, function (n) {
               return n.title == '宴会厅';
             });
-            // 加入新的 宴会厅
-            this.joinShoppingCar();
-            // wx.navigateTo({
-            //   url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
-            // })
-          }
-        }).catch((error) => {
-          console.log(error)
-        })
 
-      }
+            me.setData({
+              shoppingcar: shoppingcar
+            })
+            // 加入新的 宴会厅
+            me.joinShoppingCar();
+
+            wx.navigateTo({
+              url: '../calculate/scheduleQuery?hallid=' + me.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(me.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(me.data.ballInfo))
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+
+
+    } else {
+      // 加入 宴会厅
+      this.joinShoppingCar();
+      wx.navigateTo({
+        url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
+      })
     }
 
-    // return isballroom;
-    this.setData({
-      shoppingcar: shoppingcar
-    })
+
   },
   getShoppingCarData () {
     shoppingCarStore.get('shoppingcar').then(result => {

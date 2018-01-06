@@ -30,7 +30,8 @@
     "pages/talentDetails/talentSelectComp",
     "pages/shoppingCar/shoppingCarIn",
     "pages/dishesDetails/dishesComment",
-    "pages/celebrationDetails/celebrationComment"
+    "pages/celebrationDetails/celebrationComment",
+    "pages/talentDetails/talentListView"
   ],
   "window": {
     "backgroundTextStyle": "light",

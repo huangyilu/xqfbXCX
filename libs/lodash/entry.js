@@ -31,6 +31,7 @@ export pullAt from 'lodash-es/pullAt'
 
 export groupBy from 'lodash-es/groupBy'
 
-// export filter from 'lodash-es/filter'
+export filter from 'lodash-es/filter'
+
 // export uniqBy from 'lodash-es/uniqBy'
 // export isPlainObject from 'lodash-es/isPlainObject'

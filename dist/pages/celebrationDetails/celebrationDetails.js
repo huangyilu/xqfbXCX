@@ -24,7 +24,8 @@ Page({
       stageprice: 0
     },
 
-    shoppingcar: []
+    shoppingcar: [],
+    prepagetype: ''
   },
 
   /**
@@ -33,7 +34,8 @@ Page({
   onLoad: function (options) {
   
     this.setData({
-      celebrationid: options.celebrationid
+      celebrationid: options.celebrationid,
+      prepagetype: options.prepagetype ? options.prepagetype : ''
     })
     // this.getCelebrationDetailsData(options.celebrationid);
 

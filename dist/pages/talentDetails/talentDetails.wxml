@@ -47,8 +47,7 @@
 </view>
 
 <!-- 选择 使用时间 -->
-<!-- hidden='{{ prePageType == "home" }}' -->
-<view class='talent-time' >
+<view class='talent-time' hidden='{{ prePageType == "home" }}'>
   <view class='img-title-arrow-cell' bindtap='bindSelectTalentTimeTap'>
     <image class='left-icon' src='../../images/tal-time.png'></image>
     <text class='left-text'>选择使用时间</text>
@@ -151,8 +150,7 @@
     <image src='../../images/phone.png'></image>
     <text>电话联系</text>
   </view>
-  <!-- hidden='{{ prePageType == "home" }}' -->
-  <view class='{{ tatDetl.freeStatus ? "appointment-btn" : "notAppointment-btn" }}' bindtap='bindApptmentTap'>{{ tatDetl.freeStatus ? "立即预约" : "已被预约" }}</view>
+  <view class='{{ tatDetl.freeStatus ? "appointment-btn" : "notAppointment-btn" }}' bindtap='bindApptmentTap' hidden='{{ prePageType == "home" }}'>{{ tatDetl.freeStatus ? "立即预约" : "已被预约" }}</view>
 </view>
 
 <!-- 选择 使用时间 弹窗 -->

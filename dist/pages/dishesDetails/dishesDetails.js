@@ -31,7 +31,9 @@ Page({
 
     // 菜品弹窗
     dishesTcHiddent: true,
-    dishesTc: {}
+    dishesTc: {},
+
+    prepagetype: ''
   },
 
   /**
@@ -44,7 +46,8 @@ Page({
     this.checkShoppingCar();
 
     this.setData({
-      dishesid: options.dishesid
+      dishesid: options.dishesid,
+      prepagetype: options.prepagetype ? options.prepagetype : ''
     })
 
   },
