@@ -179,7 +179,7 @@ Page({
 
   goDishesCommentPage () {
     wx.navigateTo({
-      url: 'celebrationComment?celebrationid=' + this.data.celebrationid,
+      url: '../comment/commentListView?celebrationid=' + this.data.celebrationid + '&prePageType=celebration',
     })
   }
 

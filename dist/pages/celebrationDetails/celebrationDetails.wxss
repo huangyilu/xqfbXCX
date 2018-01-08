@@ -1,8 +1,11 @@
 /* pages/celebrationDetails/celebrationDetails.wxss */
 
-
+page {
+  width: 100%;
+}
 .body {
   margin-bottom: 110rpx;
+  width: 100%;
 }
 /* 头部 */
 .celeTitle {

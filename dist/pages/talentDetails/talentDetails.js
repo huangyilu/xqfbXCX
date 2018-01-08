@@ -27,6 +27,9 @@ Page({
     //   }]
     // }],
     comments: [],
+    allComments: [],
+    showAllcomment: false,
+
     // 评分
     // score: ['red', 'red', 'red', '', ''],
     tatDetl: null,
@@ -35,7 +38,7 @@ Page({
     // 时间段 选择器
     selectTimes: {
       selectTimePickerHidden: true,
-      reservedDate: '2018-08-08',
+      reservedDate: '',
       startHour: [],
       startMint: [],
       endHour: [],
@@ -58,6 +61,7 @@ Page({
    */
   onLoad: function (options) {
 
+
     // 查看购物车
     this.getShoppingCarData();
 
@@ -66,12 +70,11 @@ Page({
 
     this.setData({
       talentId: options.talentid,
-      prePageType: options.prepagetype
+      prePageType: options.prepagetype ? options.prepagetype : ''
     })
 
     // 初始化 时间段 选择器
     this.initSelectTimePicker();
-
 
   },
 
@@ -80,24 +83,26 @@ Page({
     var me = this;
 
     var reserveddate = wx.getStorageSync('reservedDate');
-    this.setData({
-        reserveddate: reserveddate
-    })
 
     if (reserveddate == '') {
       reserveddate = moment().format('YYYY-MM-DD');
     }
+
+    this.setData({
+      'selectTimes.reservedDate': reserveddate
+    })
     
     // 基本信息
     HotelDataService.queryTalentDetails(talentId, reserveddate).then((result) => {
       var details = hoteldata.formatTalentDetails(result);
-      var comments = hoteldata.formaHotelCommentList(result.talentCommentList);
+      var comments = hoteldata.formatCommentList(result.talentCommentList);
       var talentInfo = hoteldata.formatWeddingTalentItem(result.talent, result.talent.occupation);
       // console.log( 'queryTalentDetails' +JSON.stringify(details));
 
       me.setData({
         tatDetl: details,
-        comments: comments,
+        comments: comments.length > 3 ? hoteldata.getTheTopN(comments, 3) : comments,
+        allComments: comments,
         talentType: result.occupation,
         completeTalent: result,
         talentInfo: talentInfo
@@ -143,15 +148,26 @@ Page({
   // 点击事件
   bindMoreCommentTap () {
     // 查看全部评论
-    var me= this;
-    HotelDataService.queryTalentComment(this.data.talentId).then((result) => {
-      // console.log("queryTalentComment success = " + JSON.stringify(result));
-      me.setData({
-        comments: hoteldata.formaHotelCommentList(result)
-      })
-    }).catch((error) => {
-      console.log(error);
+
+    var showAllcomment = this.data.showAllcomment;
+    var allComments = this.data.allComments;
+
+    var initComments = [];
+
+    this.setData({
+      showAllcomment: !showAllcomment
     })
+
+    if (this.data.showAllcomment) {
+      initComments = allComments;
+    } else {
+      initComments = hoteldata.getTheTopN(allComments, 3);
+    }
+    
+    this.setData({
+      comments: initComments
+    })
+
   },
   bindPhoneCallTap () {
     wx.makePhoneCall({
@@ -249,7 +265,7 @@ Page({
   goTalentComparisonPage (e) { 
       
     // 获取同类型人才
-    HotelDataService.queryTalentSameTypeList(this.data.talentId, this.data.reserveddate).then((result) => {
+    HotelDataService.queryTalentSameTypeList(this.data.talentId, this.data.selectTimes.reservedDate).then((result) => {
       console.log("queryTalentSameTypeList success = " + JSON.stringify(result));
       if (result.length > 0) {
         wx.navigateTo({

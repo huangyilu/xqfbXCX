@@ -54,7 +54,7 @@
     <view class='shoppingtypes-view' wx:if="{{ shoppingtypes.length > 0 && paymentList.length > 0  }}">
       您可能还需要
       <block wx:for='{{ shoppingtypes }}' wx:key='{{ index }}'>
-        <text>{{ item }}{{ index == shoppingtypes.length-1 ? '' : '、' }}</text>
+        <text id='{{ item }}' bindtap='bindMissingShoppingTypesTap'>{{ item }}{{ index == shoppingtypes.length-1 ? '' : '、' }}</text>
       </block>
     </view>
 

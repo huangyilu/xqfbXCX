@@ -273,7 +273,7 @@ Page({
   },
   goDishesDetailsPage (e) {
     wx.navigateTo({
-      url: '../dishesDetails/dishesDetails?dishesid=' + e.currentTarget.id,
+      url: '../dishes/dishesDetails?dishesid=' + e.currentTarget.id,
     })
   },
   goCelebrationDetailsPage(e) {

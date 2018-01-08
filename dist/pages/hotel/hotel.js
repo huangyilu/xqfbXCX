@@ -41,6 +41,8 @@ const pageOptions = {
     // 取数据
     this.getHotelData();
 
+    wx.startPullDownRefresh()
+
   },
 
   //下拉刷新
@@ -52,7 +54,7 @@ const pageOptions = {
 
   },
 
-// 页面跳转
+  //页面跳转
   goBallroomPage (e) {
     var id = e.currentTarget.dataset.ballroomid;
     wx.navigateTo({
@@ -64,14 +66,9 @@ const pageOptions = {
       url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id + '&prepagetype=home'
     })
   },
-  // goWeddingTalentPage() {
-  //   wx.navigateTo({
-  //     url: '../weddingTalent/weddingTalent?type=dishes' 
-  //   })
-  // },
   goDishesDetailsPage (e) {
     wx.navigateTo({
-      url: '../dishesDetails/dishesDetails?dishesid=' + e.currentTarget.id + '&prepagetype=home',
+      url: '../dishes/dishesDetails?dishesid=' + e.currentTarget.id + '&prepagetype=home',
     })
   },
   goCelebrationListPage () {
@@ -89,15 +86,13 @@ const pageOptions = {
       url: '../talentDetails/talentListView',
     })
   },
+  goBallroomListViewPage () {
+    wx.navigateTo({
+      url: '../ballroom/ballroomListView',
+    })
+  },
 
   // 点击事件
-  bindBallroomTap: function () {
-
-    wx.navigateTo({
-      url: '../ballroom/allBallroomList',
-    })
-
-  },
   bindLocationTap: function () {
 
     //初始化 腾讯地图提供地理编码，拿到经纬度后打开 微信内置地图
@@ -151,9 +146,6 @@ const pageOptions = {
       console.log("gethoteldata success...");
 
       var hotelInfo = hoteldata.formatHotelInfo(result.hotel);
-      // var weddingmenu = hoteldata.formatWeddingmenu(result.comboList);
-
-      // var bans = hoteldata.formatBanquet(result.celebrationList);
 
       me.setData({
         bodyHidden: false,
@@ -166,8 +158,6 @@ const pageOptions = {
         banquet: hoteldata.formatBanquet(result.celebrationList),
         talents: flattenDeep(hoteldata.formatHomeTalent(result.talentList))
       })
-
-      console.log("talentList = " + JSON.stringify(this.data.talents));
 
       // 保存 预付定金比例
       wx.setStorageSync('prepayPercent', result.hotel.prepayPercent);

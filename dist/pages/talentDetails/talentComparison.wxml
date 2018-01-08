@@ -64,19 +64,22 @@
       <view class='title'>
         <text>评论</text>
       </view>
-      <view class='content' wx:for="{{ comp.comment.coms }}" wx:key="{{ index }}" wx:for-item="com">
+      <view class='content' wx:for="{{ comp.comment.showAllComsHidden ? comp.comment.allComs : comp.comment.coms }}" wx:key="{{ index }}" wx:for-item="com">
         <view>
-          <image class='comment-avatar' src='{{ com.avarUrl }}'></image>
-          <text class='comment-username'>{{ com.username }}</text>
+          <image class='comment-avatar' src='{{ com.avatar }}'></image>
+          <text class='comment-username'>{{ com.name }}</text>
           <view class='header-start-icon'>
             <block wx:for="{{ com.score }}" wx:for-item="score" wx:key="{{ index }}">
             <image src='{{ score == "red" ? "../../images/start-red.png" : "../../images/start.png" }}'></image>
             </block>
           </view> 
         </view>
-        <view class='third-txt-color'>{{ com.text }}</view>
+        <view class='third-txt-color'>{{ com.desc }}</view>
       </view>
-      <view class='pack-up' wx:if='{{ comp.comment.coms.length > 2  }}'>全部<image src='../../images/pack-down.png'></image></view>
+      <view class='pack-up' wx:if='{{ comp.comment.coms.length > 2  }}' bindtap='bindShowComsHiddenTap'>
+        {{ comp.comment.showAllComsHidden ? '收起' : '展开' }}
+        <image src='{{ comp.comment.showAllComsHidden ? "../../images/pack-up.png" : "../../images/pack-down.png" }}'></image>
+      </view>
     </view>
     
   </view>

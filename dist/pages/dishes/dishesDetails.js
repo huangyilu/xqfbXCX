@@ -1,4 +1,4 @@
-// pages/dishesDetails/dishesDetails.js
+// pages/dishes/dishesDetails.js
 
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
@@ -175,7 +175,7 @@ Page({
 
   goDishesCommentPage () {
     wx.navigateTo({
-      url: 'dishesComment?comboid=' + this.data.dishesid,
+      url: '../comment/commentListView?dishesid=' + this.data.dishesid + '&prePageType=dishes',
     })
   }
 

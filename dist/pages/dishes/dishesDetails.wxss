@@ -1,4 +1,4 @@
-/* pages/dishesDetails/dishesDetails.wxss */
+/* pages/dishes/dishesDetails.wxss */
 
 .title-img {
     height: 450rpx;

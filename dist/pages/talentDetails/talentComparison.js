@@ -92,6 +92,26 @@ Page({
         break;
     }
   },
+  bindShowComsHiddenTap (e) {
+    var index = e.currentTarget.id;
+    var me = this;
+
+    var lefthidden = this.data.comparisons[0].comment.showAllComsHidden;
+    var righthidden = this.data.comparisons[1].comment.showAllComsHidden;
+
+    switch(+index) {
+    case 0:
+      me.setData({
+        'comparisons[0].comment.showAllComsHidden': !lefthidden
+      })
+    break;
+    case 1:
+      me.setData({
+        'comparisons[1].comment.showAllComsHidden': !righthidden
+      })
+    break;
+    }
+  },
   bindShowImgTap (e) {
       var index = e.currentTarget.id;
       var compIndex = e.currentTarget.dataset.compindex;

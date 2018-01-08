@@ -148,7 +148,7 @@ Page({
   },
   goCommentPage () {
     wx.navigateTo({
-      url: '../ballroom/ballCommentList?hallid=' + this.data.ballroomid
+      url: '../comment/commentListView?hallid=' + this.data.ballroomid + '&prePageType=ballroom'
     })
   },
 

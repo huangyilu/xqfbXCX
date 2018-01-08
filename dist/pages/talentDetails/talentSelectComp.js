@@ -4,6 +4,7 @@ import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
 import contactsInfoStore from '../../services/contacts-info-store';
 import { Base64 } from '../../utils/urlsafe-base64'
+import moment from '../../utils/npm/moment';
 
 Page({
 
@@ -24,20 +25,18 @@ Page({
     let taletntListQs = Base64.decode(options.talentList)
     let talentListQsObj = JSON.parse(taletntListQs)
 
+    var reserveddate = wx.getStorageSync('reservedDate');
+
+    if (reserveddate == '') {
+      reserveddate = moment().format('YYYY-MM-DD');
+    }
+
     this.setData({
       talentOne: options.talentOne, 
       talentList: hoteldata.formatTalentSelectComp(talentListQsObj),
-      reserveddate : wx.getStorageSync('reservedDate')
+      reserveddate: reserveddate
     })
       
-//    contactsInfoStore.get('reservedDate').then(result => {        
-//        this.setData({
-//            reserveddate: result
-//        })
-//    }).catch(error => {
-//        console.log('contactsInfoStore .. ' + JSON.stringify(error));
-//    });
-
   },
   
   // 点击事件
@@ -69,13 +68,11 @@ Page({
   },
   getTalentDetails(talentId) {
 
-//    var reserveddate = wx.getStorageSync('reservedDate');
-
     HotelDataService.queryTalentDetails(talentId, this.data.reserveddate).then((result) => {
       console.log("queryTalentDetails success...");
-      
-      wx.redirectTo({
-        url: 'talentComparison?talentOne=' + this.data.talentOne + '&talentTwo=' + Base64.encodeURI(JSON.stringify(result)),
+
+      wx.navigateTo({
+        url: 'talentComparison?talentOne=' + this.data.talentOne + '&talentTwo=' + Base64.encodeURI(JSON.stringify(result))
       })
 
     }).catch((error) => {

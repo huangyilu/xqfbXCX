@@ -82,8 +82,7 @@
   <view class='weui-flex__item'>
     <image class='comment-icon' src='../../images/comment-gray.png' bindtap='goDishesCommentPage'></image>
   </view> 
-  <!-- hidden='{{ prepagetype == "home" }}' -->
-  <view class='weui-flex__item appointment-btn' bindtap='bindAppointmentTap'>预定</view>
+  <view class='weui-flex__item appointment-btn' bindtap='bindAppointmentTap' hidden='{{ prepagetype == "home" }}'>预定</view>
 </view>
 
 <!-- 弹窗 -->

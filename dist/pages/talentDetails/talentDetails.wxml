@@ -132,8 +132,7 @@
   <template is="comment-item" data="{{ comments }}"/>
 
   <!-- 查看更多 -->
-  <view class='pack-up' wx:if='{{ comments.length > 2 }}' bindtap="bindMoreCommentTap">
-    查看全部评论<image src='../../images/pack-down.png'></image>
+  <view class='pack-up' wx:if='{{ comments.length >= 3 }}' bindtap="bindMoreCommentTap">{{ showAllcomment ? "收起全部评论" : "查看全部评论" }}<image src='{{ showAllcomment ? "../../images/pack-up.png" : "../../images/pack-down.png" }}'></image>
   </view>
 
   <view class='empty-view'></view>

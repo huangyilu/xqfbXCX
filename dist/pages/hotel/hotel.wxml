@@ -1,6 +1,8 @@
 <!--index.wxml-->
 <import src="../../templates/scorestart/scorestart.wxml"/>
 
+<!-- <view class='remind-empty-view' hidden='{{ ballrooms.length <= 0 }}'>网络不好，请重试！</view> -->
+
 <view class="body" hidden='{{ bodyHidden }}'>
 
   <!-- 头部 -->
@@ -11,7 +13,7 @@
       
       <text>{{ hotelInfo.hotelName }}</text>
       <view class='score-view'>
-        <text class='comment-text'>90%用户好评</text>
+        <text class='comment-text'>{{ hotelInfo.hotelGoodReputation }}用户好评</text>
         <text class='hotelscore'>{{ hotelInfo.hotelScore }}分</text>
       </view>
       <view class='text'>{{ hotelInfo.hotelDescription }}</view>
@@ -40,7 +42,7 @@
       </view>
       <view class='middle-cell-right-button'>查看</view>
     </view>
-    <view class='title-arrow-cell' bindtap='bindBallroomTap'>     
+    <view class='title-arrow-cell' bindtap='goBallroomListViewPage'>     
       <text class='title'>查看全部宴会厅</text>
       <image class='right-icon' src='../../images/arrow-right.png'></image> 
     </view>  
@@ -79,7 +81,7 @@
         </view>
       </view>
     </scroll-view>
-  </view>
+    </view>
 
   <!-- 婚礼人才 -->
   <view class='hotel-talent-menu'>

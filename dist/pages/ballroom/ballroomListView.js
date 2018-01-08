@@ -37,12 +37,12 @@ Page({
   goBallroomPage (e) {
 
     var id = e.currentTarget.dataset.ballroomid;
-    wx.redirectTo({
-      url: '../ballroom/ballroom?ballroomid=' + id
-    })
-    // wx.navigateTo({
+    // wx.redirectTo({
     //   url: '../ballroom/ballroom?ballroomid=' + id
     // })
+    wx.navigateTo({
+      url: '../ballroom/ballroom?ballroomid=' + id
+    })
   }
   
 

@@ -12,7 +12,8 @@ export function formatHotelInfo(info) {
     hotelLocation: info.address,
     hotelDescription: info.descreption,
     hotelPhonecall: info.tel,
-    hotelBgimg: info.img
+    hotelBgimg: info.img,
+    hotelGoodReputation: info.goodReputation + '%'
   }
 }
 
@@ -53,17 +54,17 @@ export function getBallroomImgs(img){
   return newList;
 }
 // 宴会厅 等 评论列表
-export function formaHotelCommentList(list) {
-  return list.map(item => this.formatHotelCommentListItem(item))
-}
-export function formatHotelCommentListItem(item) {
-  return {
-    avatar: item.headimg ? item.headimg : null,
-    name: item.nickName ? item.nickName : null,
-    desc: item.commentContent ? item.commentContent : null,
-    score: item.compLevel ? this.getScoreStart(item.compLevel) : null
-  }
-}
+// export function formatHotelCommentList(list) {
+//   return list.map(item => this.formatHotelCommentListItem(item))
+// }
+// export function formatHotelCommentListItem(item) {
+//   return {
+//     avatar: item.headimg ? item.headimg : '../../images/menu_personal_inactive.png',
+//     name: item.nickName ? item.nickName : '某某',
+//     desc: item.commentContent ? item.commentContent : '好！',
+//     score: item.compLevel ? this.getScoreStart(item.compLevel) : this.getScoreStart(5)
+//   }
+// }
 
 // 首页婚礼人才
 export function formatHomeTalent (list) {
@@ -141,17 +142,17 @@ export function formatReservedItem(item) {
 }
 
 // 人才 详情评论
-export function formatTalentDetailComment (list) {
-  return list.map(comt => this.formatTalentDetailCommentItem(comt));
-}
-export function formatTalentDetailCommentItem (item) {
-  return {
-    avatar: item.img,
-    name: item.nickName,
-    desc: item.commentContent,
-    score: this.getScoreStart(item.compLevel)
-  }
-}
+// export function formatTalentDetailComment (list) {
+//   return list.map(comt => this.formatTalentDetailCommentItem(comt));
+// }
+// export function formatTalentDetailCommentItem (item) {
+//   return {
+//     avatar: item.img,
+//     name: item.nickName,
+//     desc: item.commentContent,
+//     score: this.getScoreStart(item.compLevel)
+//   }
+// }
 // 人才 更多图片
 export function formatTalentMorePic (list) {
   return list.map(item => this.formatTalentMorePicItem(item));
@@ -244,7 +245,9 @@ export function formatTalentComparison (item) {
     },
     // 评论
     comment: {
-      coms: item.talentCommentList.length > 0 ? this.getTalentComment(item.talentCommentList) : ''
+      showAllComsHidden: false,
+      coms: item.talentCommentList.length > 0 ? this.getTheTopN(this.formatCommentList(item.talentCommentList), 3) : [],
+      allComs: item.talentCommentList.length > 0 ? this.formatCommentList(item.talentCommentList) : []
     }
   }
 }
@@ -275,17 +278,17 @@ export function getTalentShowing (imgs,videos) {
   return newArr;
 }
 // 人才对比 评论
-export function getTalentComment (list) {
-  return list.map(item => this.getTalentCommentItem(item))
-}
-export function getTalentCommentItem (item) {
-  return {
-    username: item.nickName,
-    avarUrl: item.headimg,
-    text: item.commentContent,
-    score: this.getScoreStart(item.compLevel)
-  }
-}
+// export function getTalentComment (list) {
+//   return list.map(item => this.getTalentCommentItem(item))
+// }
+// export function getTalentCommentItem (item) {
+//   return {
+//     username: item.nickName,
+//     avarUrl: item.headimg,
+//     text: item.commentContent ? item.commentContent : '好！',
+//     score: this.getScoreStart(item.compLevel)
+//   }
+// }
 
 // 菜品
 export function formatWeddingmenu(list) {
@@ -801,6 +804,18 @@ export function formatHistoryorderItem (item) {
   }
 }
 
+// 统一评论格式
+export function formatCommentList(list) {
+  return list.map(item => this.formatCommentListItem(item))
+}
+export function formatCommentListItem(item) {
+  return {
+    avatar: item.headimg ? item.headimg : '../../images/menu_personal_inactive.png',
+    name: item.nickName ? item.nickName : '某某',
+    desc: item.commentContent ? item.commentContent : '好！',
+    score: item.compLevel ? this.getScoreStart(item.compLevel) : this.getScoreStart(5)
+  }
+}
 
 
 /*  -------------------- 小方法 ------------------------ */

@@ -114,7 +114,7 @@ Page({
         } else {
           // 如果没选庆典 则不可下单
           this.setData({
-            isGetReadyMakeAppoint: true
+            isGetReadyMakeAppoint: false
           })
         }
 
@@ -138,17 +138,6 @@ Page({
   // 判断是否 填写了 预订日期 联系人 等，如果没有选宴会厅 就是没选
   checkReserveddate() {
       
-//    contactsInfoStore.get('reservedDate').then(result => {
-//        return true;
-//    }).catch(error => {
-//        console.log('contactsInfoStore .. ' + JSON.stringify(error));
-//        this.setData({
-//          'reserveddateData.dateViewHidden': false
-//        })
-//        return false;
-//        
-//    });
-
     if (!wx.getStorageSync('reservedDate')) {
       
       this.setData({
@@ -189,29 +178,11 @@ Page({
       console.log(error);
     });
       
-//  取 联系人信息 
+    //取 联系人信息 
     this.setData({
         contacts: wx.getStorageSync('contacts'),
         reservedDate: wx.getStorageSync('reservedDate')
     })
-      
-//    if ( this.checkReserveddate() ) {
-//        contactsInfoStore.get('reservedDate').then(result => {
-//         this.setData({
-//             reserveddate
-//         })
-//        }).catch(error => {
-//            console.log('contactsInfoStore .. ' + JSON.stringify(error));
-//        });
-//        contactsInfoStore.get('contacts').then(result => {
-//         this.setData({
-//             contacts
-//         })
-//        }).catch(error => {
-//            console.log('contactsInfoStore .. ' + JSON.stringify(error));
-//        });
-//    }  
-      
       
   },
   // 获取最大桌数 最小桌数 宴会庆典 全息信息等
@@ -408,7 +379,7 @@ Page({
         // 判断 是否 同时选了人才 和庆典 
         if (this.data.isGetReadyMakeAppoint) {
           // 上传 资料
-          this.bindUploadPrepay();
+          // this.bindUploadPrepay();
         } else {
           wx.showModal({
             title: '提示！',
@@ -458,6 +429,30 @@ Page({
         this.removeSavedContacts();
       }
 
+    })
+
+  },
+  bindMissingShoppingTypesTap (e) {
+    var types = e.currentTarget.id;
+    var url = '';
+    switch (types)
+    {
+      case '宴会厅':
+        url = '../ballroom/ballroomListView'
+      break;
+      case '宴会庆典':
+        url = '../talentDetails/talentListView'
+      break;
+      case '菜品':
+        url = '../dishes/dishesListView'
+      break;
+      default :
+        url = '../talentDetails/talentListView'
+      break;
+    }
+
+    wx.navigateTo({
+      url: url,
     })
 
   },

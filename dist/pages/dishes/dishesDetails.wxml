@@ -1,4 +1,4 @@
-<!--pages/dishesDetails/dishesDetails.wxml-->
+<!--pages/dishes/dishesDetails.wxml-->
 
 <view  wx:if='{{ dishes.dishesList.length > 0 }}' >
 

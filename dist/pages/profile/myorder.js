@@ -140,7 +140,7 @@ Page({
       })
     } else if (title == '菜品') {
       wx.navigateTo({
-        url: '../dishesDetails/dishesDetails',
+        url: '../dishes/dishesDetails',
       })
     } else if (title == '婚礼人才') {
       wx.navigateTo({
