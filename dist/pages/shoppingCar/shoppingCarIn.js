@@ -58,7 +58,10 @@ Page({
     genderItems: [
       { name: '女士', value: '女士', checked: 'true' },
       { name: '先生', value: '先生' },
-    ]
+    ],
+
+    // 是否 同时选了人才 和庆典 全部准备好 预约下单
+    isGetReadyMakeAppoint: true
   },
 
   onShow: function () {
@@ -71,7 +74,7 @@ Page({
   onLoad: function (options) {
 
     // 设当前日期
-    var date = new Date();
+    var date = new Date()
     this.setData({
       'reserveddateData.now_year': date.getFullYear(),
       'reserveddateData.now_month': date.getMonth() + 1,
@@ -102,13 +105,30 @@ Page({
 
     var types = ['宴会厅', '菜品', '主持人', '策划师', '摄影师', '化妆师', '宴会庆典'];
     var shoppingtyppes = [];
+    var istalent = false;
+    var isCelebration = false;
     result.forEach(item => {
       if (item.title == '婚礼人才') {
         shoppingtyppes.push(item.content.info.talentname);
+        istalent = true;
       } else {
         shoppingtyppes.push(item.title);
       }
+      if (item.title == '宴会厅') {
+        isCelebration = true;
+      }
     })
+
+
+    if (istalent) {
+      if (!isCelebration) {
+        // 如果选了婚礼人才 没选庆典 则不可下单
+        this.setData({
+          isGetReadyMakeAppoint: false
+        })
+      }
+    }
+
     // shoppingtyppes = uniqWith(shoppingtyppes, isEqual);
     console.log('已选的数组 shoppingtyppes...' + JSON.stringify(shoppingtyppes));
 
@@ -123,17 +143,6 @@ Page({
   },
   // 判断是否 填写了 预订日期 联系人 等，如果没有选宴会厅 就是没选
   checkReserveddate() {
-
-    //    contactsInfoStore.get('reservedDate').then(result => {
-    //        return true;
-    //    }).catch(error => {
-    //        console.log('contactsInfoStore .. ' + JSON.stringify(error));
-    //        this.setData({
-    //          'reserveddateData.dateViewHidden': false
-    //        })
-    //        return false;
-    //        
-    //    });
 
     if (!wx.getStorageSync('reservedDate')) {
 
@@ -175,29 +184,11 @@ Page({
       console.log(error);
     });
 
-    //  取 联系人信息 
+    //取 联系人信息 
     this.setData({
       contacts: wx.getStorageSync('contacts'),
       reservedDate: wx.getStorageSync('reservedDate')
     })
-
-    //    if ( this.checkReserveddate() ) {
-    //        contactsInfoStore.get('reservedDate').then(result => {
-    //         this.setData({
-    //             reserveddate
-    //         })
-    //        }).catch(error => {
-    //            console.log('contactsInfoStore .. ' + JSON.stringify(error));
-    //        });
-    //        contactsInfoStore.get('contacts').then(result => {
-    //         this.setData({
-    //             contacts
-    //         })
-    //        }).catch(error => {
-    //            console.log('contactsInfoStore .. ' + JSON.stringify(error));
-    //        });
-    //    }  
-
 
   },
   // 获取最大桌数 最小桌数 宴会庆典 全息信息等
@@ -391,8 +382,16 @@ Page({
           content: '您还有未付定金的订单！请付款后再下单！',
         })
       } else {
-        // 上传 资料
-        this.bindUploadPrepay();
+        // 判断 是否 同时选了人才 和庆典 
+        if (this.data.isGetReadyMakeAppoint) {
+          // 上传 资料
+          this.bindUploadPrepay();
+        } else {
+          wx.showModal({
+            title: '提示！',
+            content: '选了人才一定要选宴会庆典哦！',
+          })
+        }
       }
     }
   },
@@ -436,6 +435,29 @@ Page({
         this.removeSavedContacts();
       }
 
+    })
+
+  },
+  bindMissingShoppingTypesTap(e) {
+    var types = e.currentTarget.id;
+    var url = '';
+    switch (types) {
+      case '宴会厅':
+        url = '../ballroom/ballroomListView'
+        break;
+      case '宴会庆典':
+        url = '../talents/talentListView'
+        break;
+      case '菜品':
+        url = '../dishes/dishesListView'
+        break;
+      default:
+        url = '../talents/talentListView'
+        break;
+    }
+
+    wx.navigateTo({
+      url: url,
     })
 
   },

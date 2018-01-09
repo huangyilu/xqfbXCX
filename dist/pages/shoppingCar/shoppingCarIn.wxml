@@ -26,13 +26,8 @@
         </view>
         <view class='price'>
           ¥ {{ pay.price }} 
-          <!-- {{ pay.packageStage.stage == true ? ' ( 不含全息价:¥' + pay.packageStage.stageprice + ' )' : '' }} -->
+           {{ pay.packageStage.stageprice == '价格面议' ? ' (价格面议) ' : '' }} 
           <text class='second-txt-color' style='float:right;'>x{{ pay.nums }} {{ pay.finalTableNum ? '桌' : '' }}</text> 
-          <!-- 选桌数 按钮 -->
-          <!-- <view class='tableNum-view' wx:if='{{ pay.tableNum }}'>
-            <text class='choose-tables-btn' bindtap='bingSelectTableNumTap'>选桌数</text>
-            <text class='second-txt-color'>x{{ pay.tableNum }}</text> 
-          </view> -->
           
           </view>
       </view>
@@ -59,7 +54,7 @@
     <view class='shoppingtypes-view' wx:if="{{ shoppingtypes.length > 0 && paymentList.length > 0  }}">
       您可能还需要
       <block wx:for='{{ shoppingtypes }}' wx:key='{{ index }}'>
-        <text>{{ item }}{{ index == shoppingtypes.length-1 ? '' : '、' }}</text>
+        <text id='{{ item }}' bindtap='bindMissingShoppingTypesTap'>{{ item }}{{ index == shoppingtypes.length-1 ? '' : '、' }}</text>
       </block>
     </view>
 
