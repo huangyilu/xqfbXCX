@@ -72,9 +72,9 @@
     <scroll-view class="celebration-scroll-view_H" scroll-x='true'>
       <view class='celebration-scroll-h-item' wx:for="{{ banquet }}" wx:for-item="banquet" wx:key="*this" id='{{ banquet.celebrationid }}' bindtap='goCelebrationDetailsPage'>
         <image class='bg-img' mode='aspectFill' src='{{ banquet.imgUrl }}'></image>
-        <view class='text-view'>
-          <text class='left-text'>{{ banquet.name }}</text>
-          <text class='right-text'>¥ {{ banquet.price }}</text>
+        <view class='weui-flex text-view'>
+          <view class='weui-flex__item left-text'>{{ banquet.name }}</view>
+          <view class='right-text'>¥ {{ banquet.price }}</view>
         </view>
         <view class='style-view'>
           <text class='style-icon'>{{ banquet.style }}</text>

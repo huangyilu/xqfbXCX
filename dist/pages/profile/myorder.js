@@ -144,7 +144,7 @@ Page({
       })
     } else if (title == '婚礼人才') {
       wx.navigateTo({
-        url: '../talentDetails/talentDetails',
+        url: '../talents/talentDetails',
       })
     } else if (title == '宴会庆典产品') {
       wx.navigateTo({

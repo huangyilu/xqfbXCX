@@ -401,6 +401,30 @@ export function formatCeleDetailMorePicBrowse(list) {
   })
   return newList;
 }
+// 庆典 更多视频
+export function formatCeleDetatilMoreVideo (list) {
+  return list.map(item => this.formatCeleDetatilMoreVideoItem(item));
+}
+export function formatCeleDetatilMoreVideoItem (item) {
+  return {
+    time: item.dateString,
+    urls: item.celeMediaList
+  }
+}
+export function formatCeleMoreVideoBrowse(list) {
+  var newList = [];
+  list.forEach((datevideo, i) => {
+    datevideo.celeMediaList.forEach((pic, j) => {
+      var dic = {
+        id: (i + 1) * (j + 1),
+        url: pic.vediosrc,
+        time: datevideo.dateString
+      };
+      newList.push(dic);
+    })
+  })
+  return newList;
+}
 
 
 // 转化时间戳
@@ -826,7 +850,11 @@ export function getTheTopN(list, n) {
   for (var i = 0; i < n; i++) {
     newList.push(list[i]);
   }
-  return newList;
+  if (list.length >= n) {
+    return newList;
+  } else {
+    return list;
+  }
 }
 
 // 评分转换星星

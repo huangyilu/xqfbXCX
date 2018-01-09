@@ -268,7 +268,7 @@ Page({
   // 跳转
   goTalentDetailsPage (e) {
     wx.navigateTo({
-      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.dataset.talentid,
+      url: '../talents/talentDetails?talentid=' + e.currentTarget.dataset.talentid,
     })
   },
   goDishesDetailsPage (e) {

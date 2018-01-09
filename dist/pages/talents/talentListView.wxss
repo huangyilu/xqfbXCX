@@ -1,4 +1,4 @@
-/* pages/talentDetails/talentListView.wxss */
+/* pages/talents/talentListView.wxss */
 
 @import '../../templates/talent-item/talent-item.wxss';
 

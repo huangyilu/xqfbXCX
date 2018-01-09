@@ -1,8 +1,7 @@
-// pages/talentDetails/talentDetails.js
+// pages/talents/talentDetails.js
 
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
-// import contactsInfoStore from '../../services/contacts-info-store';
 import { Base64 } from '../../utils/urlsafe-base64';
 import moment from '../../utils/npm/moment';
 import shoppingCarStore from '../../services/shopping-car-store';
@@ -114,22 +113,31 @@ Page({
   },
   initSelectTimePicker () {
     
-    var timeArr = [];
-    var timeSTr = 0;
+    var hourArr = [];
+    var hourSTr = 0;
+    var mintArr = [];
+    var mintStr = 0;
 
     for (var i=0; i<=24; i++) {
-      timeSTr = i;
+      hourSTr = i;
       if (i < 10) {
-        timeSTr = '0' + i;
+        hourSTr = '0' + i;
       }
-      timeArr.push(timeSTr);
+      hourArr.push(hourSTr);
+    }
+    for (var j=0; j<=59; j++) {
+      mintStr = j;
+      if (j < 10) {
+        mintStr = '0' + j;
+      }
+      mintArr.push(mintStr);
     }
 
     this.setData({
-      'selectTimes.startHour': timeArr,
-      'selectTimes.startMint': timeArr,
-      'selectTimes.endHour': timeArr,
-      'selectTimes.endMint': timeArr
+      'selectTimes.startHour': hourArr,
+      'selectTimes.startMint': mintArr,
+      'selectTimes.endHour': hourArr,
+      'selectTimes.endMint': mintArr
     })
 
   },

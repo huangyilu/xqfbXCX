@@ -1,4 +1,4 @@
-/* pages/talentDetails/talentDetails.wxss */
+/* pages/talents/talentDetails.wxss */
 
 @import '../../templates/comment-item/comment-item.wxss';
 @import '../../templates/scorestart/scorestart.wxss';
@@ -147,6 +147,7 @@
     width: 25%;
     height: 120rpx;
     margin-right: 30rpx;
+    border: 1px #f5f5f5 solid;
 }
 .works-img .video-icon {
     position: absolute;

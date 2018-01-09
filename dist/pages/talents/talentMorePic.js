@@ -1,4 +1,4 @@
-// pages/talentDetails/talentMorePic.js
+// pages/talents/talentMorePic.js
 
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';

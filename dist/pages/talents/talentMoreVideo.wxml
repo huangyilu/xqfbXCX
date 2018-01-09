@@ -1,4 +1,4 @@
-<!--pages/talentDetails/talentMoreVideo.wxml-->
+<!--pages/talents/talentMoreVideo.wxml-->
 
 <view class='body'>
 
@@ -7,10 +7,15 @@
   <view class='panel'>
     <view class='title'>{{ video.time }}</view>
     <block wx:for="{{ video.urls }}" wx:key="{{ index }}" wx:for-item="url">
-    <view class='video-view' bindtap='bindVideoTap' id="{{ index }}">
-      <!-- <video id="{{ index }}" src='{{ url }}' mode='aspectFill' style='float:{{ index%2 == 0 ? "left" : "right" }};' controls='false'></video> -->
+    <!-- <view class='video-view' bindtap='bindVideoTap' id="{{ index }}">
       <image wx:if='{{ img.urls.length <= 1 }}' src='{{ url.src }}' mode='aspectFill' data-index='{{ x * 2 + y + 1 }}' bindtap='bindImageTap'></image>
-      <image src='{{ url.imgsrc }}' mode='aspectFill' style='float:{{ index%2 == 0 ? "left" : "right" }};'></image>
+      <image wx:else src='{{ url.imgsrc }}' mode='aspectFill' style='float:{{ index%2 == 0 ? "left" : "right" }};'></image>
+    </view> -->
+    <view class='video-view' style='float:{{ index%2 == 0 ? "left" : "right" }};' bindtap='bindVideoTap' id="{{ index }}">
+      <image class='video-preimg' src='{{ url.imgsrc }}' mode='aspectFill' ></image>
+      <!-- icon -->
+      <image class='show-video-icon' src='../../images/video-icon.png'></image>
+
     </view>
     </block>
   </view>

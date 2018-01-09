@@ -1,4 +1,4 @@
-/* pages/talentDetails/talentComparison.wxss */
+/* pages/talents/talentComparison.wxss */
 @import '../../utils/weSwiper/weSwiper.wxss';
 
 page {

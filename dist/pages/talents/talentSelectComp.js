@@ -1,4 +1,4 @@
-// pages/talentDetails/talentSelectComp.js
+// pages/talents/talentSelectComp.js
 
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';

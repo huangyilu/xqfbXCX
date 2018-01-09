@@ -191,17 +191,13 @@
   font-size: 26rpx;
 }
 .celebration-scroll-h-item .text-view .left-text {
-  float: left;
-  width: 170rpx;
-  height: 45rpx;
   overflow: hidden; 
   display:-webkit-box;
   -webkit-box-orient:vertical;
   -webkit-line-clamp:1;
 }
 .celebration-scroll-h-item .text-view .right-text {
-  float: right;
-  /* color: rgba(153,153,153,1); */
+  margin-left: 20rpx;
   font-size: 26rpx;
   color: #F15A4A;
 }

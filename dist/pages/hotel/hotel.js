@@ -78,12 +78,12 @@ const pageOptions = {
   },
   goTalentDetailsPage (e) {
     wx.navigateTo({
-      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.id + '&prepagetype=home',
+      url: '../talents/talentDetails?talentid=' + e.currentTarget.id + '&prepagetype=home',
     })
   },
   goTalentListPage () {
     wx.navigateTo({
-      url: '../talentDetails/talentListView',
+      url: '../talents/talentListView',
     })
   },
   goBallroomListViewPage () {

@@ -1,4 +1,4 @@
-/* pages/talentDetails/talentMorePic.wxss */
+/* pages/talents/talentMorePic.wxss */
 page {
   height: 100%;
   width: 100%;
@@ -21,6 +21,7 @@ page {
     width: 48.5%;
     height: 200rpx;
     margin-bottom: 20rpx;
+    border: 1px #f5f5f5 solid;
 }
 
 .showPic {

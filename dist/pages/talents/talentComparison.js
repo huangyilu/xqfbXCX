@@ -1,4 +1,4 @@
-// pages/talentDetails/talentComparison.js
+// pages/talents/talentComparison.js
 
 import weSwiper from '../../utils/weSwiper/weSwiper.js'
 import * as hoteldata from '../../utils/hoteldata-format';

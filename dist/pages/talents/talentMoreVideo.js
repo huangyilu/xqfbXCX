@@ -1,4 +1,4 @@
-// pages/talentDetails/talentMoreVideo.js
+// pages/talents/talentMoreVideo.js
 
 import weSwiper from '../../utils/weSwiper/weSwiper.js'
 import * as hoteldata from '../../utils/hoteldata-format';
@@ -11,19 +11,7 @@ const option = {
   data: {
     videoList: false,
     showBigVideoHidden: true,
-    videoUrls: [
-      {
-        time: '2017-09-09',
-        urls: [
-          {
-            imgsrc: 'http://47.104.19.44/group1/M00/00/02/rB_ZQVob2X6AcgjYAACWbMGzvkU548.jpg'
-          },
-          {
-            imgsrc: 'http://47.104.19.44/group1/M00/00/02/rB_ZQVob2X6AcgjYAACWbMGzvkU548.jpg'
-          }
-        ]
-      }
-    ],
+    videoUrls: [],
     // 浏览视频
     videoIndex: 1,
     videoTime: '',

@@ -1,4 +1,4 @@
-// pages/talentDetails/talentListView.js
+// pages/talents/talentListView.js
 
 import moment from '../../utils/npm/moment';
 import * as hoteldata from '../../utils/hoteldata-format';
@@ -58,7 +58,7 @@ Page({
   },
   goTalentDetailsPage(e) {
     wx.navigateTo({
-      url: '../talentDetails/talentDetails?talentid=' + e.currentTarget.dataset.talentid + '&prepagetype=home',
+      url: '../talents/talentDetails?talentid=' + e.currentTarget.dataset.talentid + '&prepagetype=home',
     })
   },
 

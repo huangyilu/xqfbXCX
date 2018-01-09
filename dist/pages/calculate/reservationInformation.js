@@ -305,21 +305,21 @@ const conf = {
     if (this.data.newDays == '') {
       this.showModalContent('请选择预订日期！');
     } 
-    // else if (this.data.contacts.contact == '') {
-    //   this.showModalContent('请填写联系人！');
-    // } 
-    // else if (this.data.contacts.contactInformation == '') {
-    //   this.showModalContent('请填写联系电话！');
-    // } 
+    else if (this.data.contacts.contact == '') {
+      this.showModalContent('请填写联系人！');
+    } 
+    else if (this.data.contacts.contactInformation == '') {
+      this.showModalContent('请填写联系电话！');
+    } 
     else {
-      //保存桌数
-      // wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
-      // // 保存联系人 信息
-      // wx.setStorageSync('contacts', this.data.contacts);
+      // 保存桌数
+      wx.setStorageSync('ballTablenNum', this.data.ballInfo.tabNumsText);
+      // 保存联系人 信息
+      wx.setStorageSync('contacts', this.data.contacts);
       // 保存预订 日期
       wx.setStorageSync('reservedDate', this.data.newDays);
-      // // 宴会厅加入购物车
-      // this.joinShoppingCar();
+      // 宴会厅加入购物车
+      this.joinShoppingCar();
   
       wx.navigateTo({
         url: '../weddingTalent/weddingTalent?reservedDate=' + this.data.newDays

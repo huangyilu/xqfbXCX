@@ -133,9 +133,7 @@ Page({
       // 替换宴会厅 并进入下一页
       // 宴会厅 加入购物车
       this.joinShoppingCar();
-      // wx.navigateTo({
-      //   url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
-      // })
+
     } else {
       console.log('sssssss');
     }
@@ -277,7 +275,7 @@ Page({
             me.joinShoppingCar();
 
             wx.navigateTo({
-              url: '../calculate/scheduleQuery?hallid=' + me.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(me.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(me.data.ballInfo))
+              url: '../calculate/reservationInformation?hallid=' + me.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(me.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(me.data.ballInfo))
             })
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -290,7 +288,7 @@ Page({
       // 加入 宴会厅
       this.joinShoppingCar();
       wx.navigateTo({
-        url: '../calculate/scheduleQuery?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
+        url: '../calculate/reservationInformation?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
       })
     }
 

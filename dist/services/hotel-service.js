@@ -90,6 +90,12 @@ export function queryCelebrationDetailPics(celebrationId) {
     celebrationId: celebrationId
   })
 }
+// 庆典视频
+export function queryCelebrationDetailMedia(celebrationId) {
+  return jsonGetRequest('celebration/celebrationMedia', {
+    celebrationId: celebrationId
+  })
+}
 // 庆典评论
 export function queryCelebrationComment (celebrationId) {
   return jsonGetRequest('comment/getCeleCom', {

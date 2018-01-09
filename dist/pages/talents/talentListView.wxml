@@ -1,4 +1,4 @@
-<!--pages/talentDetails/talentListView.wxml-->
+<!--pages/talents/talentListView.wxml-->
 <import src="../../templates/talent-item/talent-item.wxml"/>
 
 <view class='bg-view'>

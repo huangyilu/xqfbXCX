@@ -1,4 +1,4 @@
-<!--pages/talentDetails/talentDetails.wxml-->
+<!--pages/talents/talentDetails.wxml-->
 <import src="../../templates/comment-item/comment-item.wxml"/>
 <import src="../../templates/scorestart/scorestart.wxml"/>
 
@@ -96,7 +96,6 @@
     <view class='works-img' style='border-bottom: 1px #f1f1f1 solid;'>
       <block wx:for="{{ tatDetl.mypics }}" wx:key="*this">
       <image class='image' mode='aspectFill' src='{{ item.src }}'></image>
-      <!-- <image class='video-icon' src='../../images/video-icon.png'></image> -->
       </block>
     </view>
   </view>
