@@ -62,7 +62,7 @@ Page({
       me.setData({
         dishesResult: result,
         dishes: hoteldata.formatDishesDetails(result),
-        dishesImgUrls: result.dishStyleList
+        dishesImgUrls: hoteldata.formatDishesDetailsSwiper(result.dishStyleGroupList)
       })
 
       console.log("queryDishesDetails success..." + JSON.stringify(this.data.dishes));
@@ -140,9 +140,9 @@ Page({
       icon: 'success',
       duration: 2000,
       success: function (res) {
-        // 前往购物车
-        wx.navigateTo({
-          url: '../shoppingCar/shoppingCarIn',
+        // 返回 上一页
+        wx.navigateBack({
+          delta: 1
         })
       }
     })

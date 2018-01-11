@@ -261,6 +261,11 @@ Page({
       shoppingcar.push(formatTalentInfo);
 
       shoppingCarStore.save('shoppingcar', shoppingcar); 
+
+      wx.navigateBack({
+        delta: 1
+      })
+
     } else {
       wx.showModal({
         title: '提示',

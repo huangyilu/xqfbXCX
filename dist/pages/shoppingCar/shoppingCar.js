@@ -168,13 +168,14 @@ Page({
   getShoppingCarData () {
     shoppingCarStore.get('shoppingcar').then(result => {
 
-      console.log('get shoppingcar...' + JSON.stringify(result));
-
-      this.setData({
-        shoppingcarinstore: result,
-        paymentList: hoteldata.formatShoppingcar(result)
-      })
       this.getMaxMinTable(result);
+      this.setData({
+        shoppingcarinstore: hoteldata.formatShoppingcarInStore(result),
+        paymentList: hoteldata.formatShoppingcar(result, this.data.tabNumsText)
+      })
+
+      console.log('get shoppingcar...' + JSON.stringify(hoteldata.formatShoppingcarInStore(result)));
+      
       this.getTotalPrice(this.data.paymentList);
       // 检查 购物是否完整
       this.checkShoppingCar(result);
@@ -186,8 +187,8 @@ Page({
       
     //取 联系人信息 
     this.setData({
-        contacts: wx.getStorageSync('contacts'),
-        reservedDate: wx.getStorageSync('reservedDate')
+      contacts: wx.getStorageSync('contacts'),
+      reservedDate: wx.getStorageSync('reservedDate')
     })
       
   },
@@ -322,7 +323,8 @@ Page({
 
     var shopppingid = e.currentTarget.dataset.shopppingid,
         payList = this.data.paymentList,
-        editType = e.currentTarget.dataset.type;
+        editType = e.currentTarget.dataset.type,
+        shoppingcarinstore = this.data.shoppingcarinstore;
 
     if (editType == 'edit') {
       payList[shopppingid].symbolEdit = 'true';
@@ -367,6 +369,9 @@ Page({
       tabNumsText: payList[shopppingid].nums,
       paymentList: payList
     })
+
+    //保存桌数
+    wx.setStorageSync('ballTablenNum', payList[shopppingid].nums);
 
     this.getTotalPrice(this.data.paymentList);
         
@@ -447,13 +452,13 @@ Page({
         url = '../ballroom/ballroomListView'
       break;
       case '宴会庆典':
-        url = '../talents/talentListView'
+        url = '../celebration/celebrationListView?prepagetype=shoppingcar'
       break;
       case '菜品':
-        url = '../dishes/dishesListView'
+        url = '../dishes/dishesListView?prepagetype=shoppingcar'
       break;
       default :
-        url = '../talents/talentListView'
+        url = '../talents/talentListView?prepagetype=shoppingcar'
       break;
     }
 
@@ -505,15 +510,6 @@ Page({
       this.getTotalPrice(this.data.paymentList);
 
     });
-      
-//    contactsInfoStore.clear('contacts').finally(() => {
-//      console.log('removeStorage contacts')
-//    });
-//
-//    contactsInfoStore.clear('reservedDate').finally(() => {
-//      console.log('removeStorage reservedDate')
-//    });
-//      
 
     wx.removeStorage({
       key: 'reservedDate',

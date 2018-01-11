@@ -1,4 +1,4 @@
-// pages/celebrationDetails/celebrationDetails.js
+// pages/celebration/celebrationDetails.js
 
 import * as hoteldata from '../../utils/hoteldata-format';
 import * as HotelDataService from '../../services/hotel-service';
@@ -120,7 +120,7 @@ Page({
   },
   bindMorePicTap () {
     wx.navigateTo({
-      url: 'celebrationShowMorePic?celebrationid=' + this.data.celebrationid,
+      url: 'celebrationShowMore?celebrationid=' + this.data.celebrationid,
     })
   },
 

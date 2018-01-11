@@ -1,4 +1,4 @@
-<!--pages/celebrationDetails/celebrationDetails.wxml-->
+<!--pages/celebration/celebrationDetails.wxml-->
 
 <view class='body' wx:if='{{ celebration }}'>
   <!-- 头部 -->

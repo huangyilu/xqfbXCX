@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    prePageType: '',
+
     windowHeight: '',
     leftTabs: [],
     talentList: [],
@@ -21,6 +23,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.setData({
+      prePageType: options.prepagetype ? options.prepagetype : ''
+    })
 
     var res = wx.getSystemInfoSync();
     this.setData({
@@ -58,7 +64,7 @@ Page({
   },
   goTalentDetailsPage(e) {
     wx.navigateTo({
-      url: '../talents/talentDetails?talentid=' + e.currentTarget.dataset.talentid + '&prepagetype=home',
+      url: '../talents/talentDetails?talentid=' + e.currentTarget.dataset.talentid + '&prepagetype=' + this.data.prePageType,
     })
   },
 

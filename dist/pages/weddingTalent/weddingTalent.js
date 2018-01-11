@@ -278,7 +278,7 @@ Page({
   },
   goCelebrationDetailsPage(e) {
     wx.navigateTo({
-      url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id
+      url: '../celebration/celebrationDetails?celebrationid=' + e.currentTarget.id
     })
   },
   goSettlementPage () {
@@ -288,7 +288,7 @@ Page({
   },
   goShoppingCarPage () {
     wx.navigateTo({
-      url: '../shoppingCar/shoppingCarIn',
+      url: '../shoppingCar/shoppingCarIn?prepagetype=wedtalt',
     })
   }
 })

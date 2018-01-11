@@ -1,4 +1,4 @@
-/* pages/celebrationDetails/celebrationShowMorePic.wxss */
+/* pages/celebration/celebrationShowMore.wxss */
 
 @import '../../utils/weSwiper/weSwiper.wxss';
 

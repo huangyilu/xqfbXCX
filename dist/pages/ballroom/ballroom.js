@@ -132,7 +132,7 @@ Page({
     if (this.checkShoppingCar()) {
       // 替换宴会厅 并进入下一页
       // 宴会厅 加入购物车
-      this.joinShoppingCar();
+      // this.joinShoppingCar();
 
     } else {
       console.log('sssssss');
@@ -234,7 +234,7 @@ Page({
       this.saveLocalChooseTime(chooseTime);
       this.saveLocalContacts(this.data.contacts);
       // 加入购物车
-      this.joinShoppingCar();
+      // this.joinShoppingCar();
       this.setData({
         'reserveddateData.dateViewHidden': true
       })
@@ -258,7 +258,7 @@ Page({
     if (isBallroom) {
 
       wx.showModal({
-        title: '提示',
+        title: '您已选有宴会厅！',
         content: '是否替换已有宴会厅？',
         success: function (res) {
           if (res.confirm) {
@@ -272,7 +272,8 @@ Page({
               shoppingcar: shoppingcar
             })
             // 加入新的 宴会厅
-            me.joinShoppingCar();
+            // me.joinShoppingCar();
+            shoppingCarStore.save('shoppingcar', shoppingcar);
 
             wx.navigateTo({
               url: '../calculate/reservationInformation?hallid=' + me.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(me.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(me.data.ballInfo))
@@ -286,7 +287,7 @@ Page({
 
     } else {
       // 加入 宴会厅
-      this.joinShoppingCar();
+      // this.joinShoppingCar();
       wx.navigateTo({
         url: '../calculate/reservationInformation?hallid=' + this.data.ballroomid + '&balldetails=' + Base64.encodeURI(JSON.stringify(this.data.balldetails)) + '&ballinfo=' + Base64.encodeURI(JSON.stringify(this.data.ballInfo))
       })

@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    prePageType: '',
+
     disheList: [],
     dishesResult: [],
     shoppingcars: []
@@ -19,6 +21,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+    this.setData({
+      prePageType: options.prepagetype ? options.prepagetype : ''
+    })
 
     this.getShoppingCarInStore();
     this.getDishesList();
@@ -81,7 +87,7 @@ Page({
 
   goDishesDetailsPage(e) {
     wx.navigateTo({
-      url: '../dishes/dishesDetails?dishesid=' + e.currentTarget.id,
+      url: '../dishes/dishesDetails?dishesid=' + e.currentTarget.id + '&prepagetype=' + this.data.prePageType,
     })
   },
   

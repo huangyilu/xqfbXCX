@@ -12,7 +12,7 @@ export function formatHotelInfo(info) {
     hotelLocation: info.address,
     hotelDescription: info.descreption,
     hotelPhonecall: info.tel,
-    hotelBgimg: info.img,
+    hotelBgimg: info.img.split(','),
     hotelGoodReputation: info.goodReputation + '%'
   }
 }
@@ -23,9 +23,8 @@ export function formatBallrooms(list) {
 }
 export function formatBallroomsItem(item) {
   return {
-    // imgUrl: item.img,
     ballroomId: item.banquetHallId,
-    imgUrl: item.img,
+    imgUrl: item.image,
     name: item.name,
     level: item.floorNum,
     tabNums: item.minTable + '~' + item.maxTable,
@@ -45,13 +44,8 @@ export function fomatBallroomInfo (item) {
     highLevel: item.floorHeight + 'm',
     area: item.area + '㎡',
     imgUrl: item.img,
-    imgUrls: this.getBallroomImgs(item.img)
+    imgUrls: item.img.split(',')
   }
-}
-export function getBallroomImgs(img){
-  var newList = [];
-  newList.push(img)
-  return newList;
 }
 // 宴会厅 等 评论列表
 // export function formatHotelCommentList(list) {
@@ -311,6 +305,15 @@ export function formatDishesDetails (item) {
     dishesList: item.dishStyleGroupList
   }
 }
+export function formatDishesDetailsSwiper(dishesList){
+  var newList = [];
+  dishesList.map(dishes => {
+    dishes.list.map(item => {
+      newList.push(item);
+    })
+  })
+  return newList
+}
 
 //宴会庆典
 export function formatBanquet(list) {
@@ -433,10 +436,10 @@ export function formatTimestampToStr(timestamp) {
 }
 
 // 购物车
-export function formatShoppingcar(list) {
-  return list.map((item, i) => this.formatShoppingcarItem(item, i))
+export function formatShoppingcar(list, localTableNum) {
+  return list.map((item, i) => this.formatShoppingcarItem(item, i, localTableNum))
 }
-export function formatShoppingcarItem(item, i) {
+export function formatShoppingcarItem(item, i, localTableNum) {
   return {
     shopppingid: i,
     payid: item.content.typeid,
@@ -447,8 +450,8 @@ export function formatShoppingcarItem(item, i) {
     floorHeight: item.content.info.floorHeight ? '层高:' + item.content.info.floorHeight +'m' : '',
     tableNum: item.content.info.minTable ? item.content.info.minTable + '~' + item.content.info.maxTable + '桌' : '',
     price: item.content.packageStage ? this.getCelebrationPrice(item.content.packageStage) : (item.content.info.price ? item.content.info.price : 0),
-    nums: item.content.tableNum ? item.content.tableNum : 1,
-    finalTableNum: item.content.tableNum ? item.content.tableNum : null,
+    nums: item.content.tableNum ? localTableNum : 1,
+    finalTableNum: item.content.tableNum ? localTableNum : null,
     minTable: item.content.info.minTable ? item.content.info.minTable : null,
     maxTable: item.content.info.minTable ? item.content.info.maxTable : null,
     packageStage: item.content.packageStage ? item.content.packageStage : null,
@@ -457,15 +460,25 @@ export function formatShoppingcarItem(item, i) {
   }
     
 }
+export function formatShoppingcarInStore(list) {
+  return list.map(item => this.formatShoppingcarInStoreItem(item))
+}
+export function formatShoppingcarInStoreItem (item) {
+  return {
+    title: item.title,
+    content: item.content,
+    selected: true
+  }
+}
 
 // 计算 宴会庆典 套餐 价钱
 export function getCelebrationPrice(packageStage) {
   var price = packageStage.packPrice;
   if (packageStage.stage) {
     price = packageStage.packPrice + packageStage.stageprice
-    if (packageStage.packPrice == '价格面议') {
-      price = 0
-    }
+  }
+  if (packageStage.packPrice == '价格面议' || packageStage.stageprice == '价格面议') {
+    price = 0
   }
   return price;
 }
@@ -498,7 +511,7 @@ export function getLocalShoppingId(name, item) {
 }
 export function getLocalShoppingImgurl(name, item) {
   if (name == '宴会厅') {
-    return item.content.info.img;
+    return item.content.info.image;
   } else if (name == '婚礼人才') {
     return item.content.info.imgUrl;
   } else if (name == '菜品') {
@@ -538,6 +551,11 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
       dic.hallTable = hallTable;
     } else if (item.title == '宴会庆典') {
       dic.celebration = item.content.typeid;
+
+      if (celePrice == '价格面议') {
+        celePrice = 0
+      }
+
       dic.celePrice = celePrice.toString();
       dic.comboStyle = comboStyle;
       dic.isStage = isStage;
@@ -558,7 +576,7 @@ export function formatMyorderAppointmentItem (item) {
     time: moment(item.reservedDate).format('YYYY-MM-DD'),
     reservationCode: item.vaidateCode,
     reservationCodeImg: item.twoBarCode,
-    prePrice: item.obligation,
+    prePrice: item.prePayPrice ? '¥ ' + item.prePayPrice : 0,
     countPrice: item.count,
     addInfo: '待付款',
     payList: this.formatAppList(item.hall, item.combo, item.celebration, item.talent)
@@ -593,14 +611,19 @@ export function formatAppList (hall, combo, celebration, talent) {
 }
 export function formatAppListItem(item, title, id) {
   return {
-    id: item.id ? item.id : null,
-    imgUrl: item.image ? item.image : (item.headImg ? item.headImg : item.img),
+    id: item.id ? item.id : id,
+    // imgUrl: item.image ? item.image : (item.headImg ? item.headImg : item.img),
+    imgUrl: item.imageAll.length > 0 ? item.imageAll[0] : '',
     title: item.occupation ? item.occupation : title,
     name: item.name,
     floor: item.floorNum ? item.floorNum : '',
     floorHeight: item.floorHeight ? '层高：' + item.floorHeight : '',
-    price: item.price ? item.price : 0,
-    nums: item.countTable ? item.countTable : 1
+    price: item.price ? '¥ ' + item.price : '¥ 0',
+    nums: item.countTable ? item.countTable : 1,
+    actualPrice: item.actualPrice == 0 ? '¥ 0 (价格面议)' : null,
+    packageStage: item.comboName ? item.comboName : null,
+    stage: item.stage == '是' ? true : false,
+    celeName: item.comboName ? item.name : ''
   }
 }
 
@@ -669,7 +692,7 @@ export function formatMyorderCommentsItem (item) {
     orderId: item.id,
     open: false,
     time: moment(item.reservedDate).format('YYYY-MM-DD'),
-    totalPrice: item.count,
+    totalPrice: item.count ? item.count : 0,
     addInfo: '待评价',
     titleImg: item.hall[0].img,
     titleName: item.hall[0].name,
@@ -677,6 +700,23 @@ export function formatMyorderCommentsItem (item) {
   }
 }
 
+// 我的 历史订单
+export function formatHistoryorder(list) {
+  return list.map(item => this.formatHistoryorderItem(item))
+}
+export function formatHistoryorderItem(item) {
+  return {
+    orderId: item.id,
+    open: false,
+    time: moment(item.reservedDate).format('YYYY-MM-DD'),
+    prePrice: item.prePayPrice ? item.prePayPrice : 0,
+    totalPrice: item.count,
+    addInfo: '历史订单',
+    titleImg: item.hall[0].img,
+    titleName: item.hall[0].name,
+    payList: this.formatAppList(item.hall, item.combo, item.celebration, item.talent)
+  }
+}
 
 // 我的消息
 export function formatMessageList (list) {
@@ -812,20 +852,6 @@ export function formatUploadCommentLevelString (list) {
     newScore = newScore + item.score;
   })
   return +(newScore / list.length).toFixed(1);
-}
-
-// 历史订单
-export function formatHistoryorder(list) {
-  return list.map(item => this.formatHistoryorderItem(item))
-}
-export function formatHistoryorderItem (item) {
-  return {
-    payid: item.id,
-    date: moment(item.reservedDate).format('YYYY-MM-DD'),
-    totalPrice: item.count,
-    prePrice: item.obligation,
-    appointmentList: this.formatAppList(item.hall, item.combo, item.celebration, item.talent)
-  }
 }
 
 // 统一评论格式

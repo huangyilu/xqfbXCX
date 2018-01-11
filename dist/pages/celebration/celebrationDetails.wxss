@@ -1,4 +1,4 @@
-/* pages/celebrationDetails/celebrationDetails.wxss */
+/* pages/celebration/celebrationDetails.wxss */
 
 page {
   width: 100%;

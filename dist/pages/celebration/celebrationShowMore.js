@@ -1,4 +1,4 @@
-// pages/celebrationDetails/celebrationShowMorePic.js
+// pages/celebration/celebrationShowMore.js
 
 import weSwiper from '../../utils/weSwiper/weSwiper.js'
 import * as hoteldata from '../../utils/hoteldata-format';

@@ -63,7 +63,7 @@ const pageOptions = {
   },
   goCelebrationDetailsPage (e) {
     wx.navigateTo({
-      url: '../celebrationDetails/celebrationDetails?celebrationid=' + e.currentTarget.id + '&prepagetype=home'
+      url: '../celebration/celebrationDetails?celebrationid=' + e.currentTarget.id + '&prepagetype=home'
     })
   },
   goDishesDetailsPage (e) {
@@ -73,7 +73,7 @@ const pageOptions = {
   },
   goCelebrationListPage () {
     wx.navigateTo({
-      url: '../celebrationDetails/celebrationList?prepagetype=home',
+      url: '../celebration/celebrationList?prepagetype=home',
     })
   },
   goTalentDetailsPage (e) {
@@ -83,12 +83,12 @@ const pageOptions = {
   },
   goTalentListPage () {
     wx.navigateTo({
-      url: '../talents/talentListView',
+      url: '../talents/talentListView?prepagetype=home',
     })
   },
   goBallroomListViewPage () {
     wx.navigateTo({
-      url: '../ballroom/ballroomListView',
+      url: '../ballroom/ballroomListView?prepagetype=home',
     })
   },
 
@@ -143,15 +143,20 @@ const pageOptions = {
     var me = this;
     HotelDataService.queryHotelHome().then((result) => {
       // console.log("success = " + JSON.stringify(result.hotel));
-      console.log("gethoteldata success...");
+      // console.log("gethoteldata success...");
 
       var hotelInfo = hoteldata.formatHotelInfo(result.hotel);
+      wx.setNavigationBarTitle({
+        title: hotelInfo.hotelName,
+      })
+
+      console.log("gethoteldata success..." + JSON.stringify(hotelInfo));
 
       me.setData({
         bodyHidden: false,
         hotelInfo: hotelInfo,
         score: hoteldata.getScoreStart(hotelInfo.hotelScore),
-        ballrooms: hoteldata.formatBallrooms(result.banquetHallList),
+        ballrooms: hoteldata.getTheTopN(hoteldata.formatBallrooms(result.banquetHallList), 2),
         ballroomsNum: result.banquetHallList.length,
         weddingmenu: hoteldata.formatWeddingmenu(result.comboList),
         weddingmenuNum: result.comboList.length,

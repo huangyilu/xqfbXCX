@@ -12,22 +12,23 @@ import {
 }
 from 'wx-request-promise';
 
-// 待付款
+// 待付款 
 export function getBrandWCPayRequestParams(dic) {
   return urlencodePostRequest('pay/prepay', dic);
 }
 // 付尾款
-export function getBrandWCFinalyPayRequestParams(orderid, openid) {
+export function getBrandWCFinalyPayRequestParams(orderid, openid, obligation) {
   return urlencodePostRequest('pay/payed', {
     orderId: orderid,
     openId: openid,
-    hotelId: +appConfig.hotelId
+    hotelId: +appConfig.hotelId,
+    obligation: obligation
   });
 }
 
-export function makeFinalPay(orderid, openid) {
-  return getBrandWCFinalyPayRequestParams(orderid, openid).then((orderParams) => {
-    if (orderParams.result) {
+export function makeFinalPay(orderid, openid, obligation) {
+  return getBrandWCFinalyPayRequestParams(orderid, openid, obligation).then((orderParams) => {
+    if (orderParams.result == true) {
       return requestPayment(orderParams);
     } else {
       wx.showToast({
@@ -35,6 +36,7 @@ export function makeFinalPay(orderid, openid) {
         icon: 'success',
         duration: 5000
       })
+      return false
     }
   })
 }

@@ -17,6 +17,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    prepagetype: '',
+
     allchecked: true,
     totalPrice: 0,
     prepayPrice: 0,
@@ -61,7 +63,8 @@ Page({
     ],
 
     // 是否 同时选了人才 和庆典 全部准备好 预约下单
-    isGetReadyMakeAppoint: true
+    isGetReadyMakeAppoint: true,
+    reservedDate: ''
   },
 
   onShow: function () {
@@ -88,7 +91,7 @@ Page({
     //初始化 日期选择
     this.setThisMonthPicArr();
 
-    this.getShoppingCarData();
+    // this.getShoppingCarData();
 
 
     this.setData({
@@ -168,13 +171,14 @@ Page({
   getShoppingCarData() {
     shoppingCarStore.get('shoppingcar').then(result => {
 
-      console.log('get shoppingcar...' + JSON.stringify(result));
-
-      this.setData({
-        shoppingcarinstore: result,
-        paymentList: hoteldata.formatShoppingcar(result)
-      })
       this.getMaxMinTable(result);
+      this.setData({
+        shoppingcarinstore: hoteldata.formatShoppingcarInStore(result),
+        paymentList: hoteldata.formatShoppingcar(result, this.data.tabNumsText)
+      })
+
+      console.log('get shoppingcar...' + JSON.stringify(hoteldata.formatShoppingcarInStore(result)));
+
       this.getTotalPrice(this.data.paymentList);
       // 检查 购物是否完整
       this.checkShoppingCar(result);
@@ -322,7 +326,8 @@ Page({
 
     var shopppingid = e.currentTarget.dataset.shopppingid,
       payList = this.data.paymentList,
-      editType = e.currentTarget.dataset.type;
+      editType = e.currentTarget.dataset.type,
+      shoppingcarinstore = this.data.shoppingcarinstore;
 
     if (editType == 'edit') {
       payList[shopppingid].symbolEdit = 'true';
@@ -367,6 +372,9 @@ Page({
       tabNumsText: payList[shopppingid].nums,
       paymentList: payList
     })
+
+    //保存桌数
+    wx.setStorageSync('ballTablenNum', payList[shopppingid].nums);
 
     this.getTotalPrice(this.data.paymentList);
 
@@ -439,26 +447,39 @@ Page({
 
   },
   bindMissingShoppingTypesTap(e) {
-    var types = e.currentTarget.id;
-    var url = '';
-    switch (types) {
-      case '宴会厅':
-        url = '../ballroom/ballroomListView'
-        break;
-      case '宴会庆典':
-        url = '../talents/talentListView'
-        break;
-      case '菜品':
-        url = '../dishes/dishesListView'
-        break;
-      default:
-        url = '../talents/talentListView'
-        break;
+    // var types = e.currentTarget.id;
+    // var url = '';
+    // switch (types) {
+    //   case '宴会厅':
+    //     url = '../ballroom/ballroomListView'
+    //     break;
+    //   case '宴会庆典':
+    //     url = '../celebration/celebrationListView?prepagetype=shoppingcar'
+    //     break;
+    //   case '菜品':
+    //     url = '../dishes/dishesListView?prepagetype=shoppingcar'
+    //     break;
+    //   default:
+    //     url = '../talents/talentListView?prepagetype=shoppingcar'
+    //     break;
+    // }
+
+    // wx.navigateTo({
+    //   url: url,
+    // })
+
+    // 注意 此处 与 外部 购物车 不一样 的操作！
+    if (this.data.prepagetype == 'wedtalt') {
+      wx.navigateBack({
+        delta: 1
+      })
+    } else {
+      wx.navigateBack({
+        delta: 2
+      })
     }
 
-    wx.navigateTo({
-      url: url,
-    })
+
 
   },
 
@@ -504,15 +525,6 @@ Page({
       this.getTotalPrice(this.data.paymentList);
 
     });
-
-    //    contactsInfoStore.clear('contacts').finally(() => {
-    //      console.log('removeStorage contacts')
-    //    });
-    //
-    //    contactsInfoStore.clear('reservedDate').finally(() => {
-    //      console.log('removeStorage reservedDate')
-    //    });
-    //      
 
     wx.removeStorage({
       key: 'reservedDate',

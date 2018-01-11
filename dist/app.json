@@ -14,9 +14,9 @@
     "pages/settlement/settlement",
     "pages/calculate/reservationInformation",
     "pages/calculate/appointmentSite",
-    "pages/celebrationDetails/celebrationDetails",
-    "pages/celebrationDetails/celebrationList",
-    "pages/celebrationDetails/celebrationShowMorePic",
+    "pages/celebration/celebrationDetails",
+    "pages/celebration/celebrationListView",
+    "pages/celebration/celebrationShowMore",
     "pages/dishes/dishesDetails",
     "pages/dishes/dishesListView",
     "pages/talents/talentMorePic",
@@ -33,7 +33,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F15A4A",
-    "navigationBarTitleText": "苏州独墅湖世尊酒店",
+    "navigationBarTitleText": "喜庆风暴",
     "navigationBarTextStyle": "#ffffff"
   },
   "tabBar": {

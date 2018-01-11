@@ -7,8 +7,19 @@
 
   <!-- 头部 -->
   <view class='header'>
+    
+    <!-- 首页头部轮播图 -->
+    <swiper class='imgSwiper' indicator-dots="true" >
+    <block wx:for="{{ hotelInfo.hotelBgimg }}" wx:key="{{ index }}">
+      <swiper-item>
+        <image class='header-img' mode="widthFix" src="{{ item }}"/>
+      </swiper-item>
+    </block>
+    </swiper>
+
+    <!-- 电话按钮 -->
     <image class='phone-call-icon' src='../../images/phonecall.png' data-phonenum='{{ hotelInfo.hotelphonecall }}' bindtap='bindPhoneCallTap'></image>
-    <image class='header-img' mode='aspectFill' src='{{ hotelInfo.hotelBgimg }}'></image>
+
     <view class='header-text weui-flex'>
       
       <text>{{ hotelInfo.hotelName }}</text>
