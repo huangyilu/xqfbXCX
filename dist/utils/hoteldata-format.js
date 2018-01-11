@@ -77,7 +77,7 @@ export function formatHomeTalentListItem (item) {
     occupation: item.occupation,
     headImg: item.headImg,
     goodReputation: item.goodReputation + '%',
-    experience: item.experience
+    experience: item.chosenCount
   }
 }
 
@@ -100,7 +100,7 @@ export function formatWeddingTalentItem (item, talentname) {
     imgUrl: item.headImg,
     name: item.name,
     praise: item.goodReputation + '%好评',
-    transaction: item.experience ? '交易:' + item.experience + '次' : '交易:0次',
+    transaction: item.chosenCount ? '交易:' + item.chosenCount + '次' : '交易:0次',
     price: item.price,
     selected: false,
     freeStatus: item.freeStatus

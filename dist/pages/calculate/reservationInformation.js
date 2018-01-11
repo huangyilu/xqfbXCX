@@ -5,6 +5,7 @@ import * as HotelDataService from '../../services/hotel-service';
 import { Base64 } from '../../utils/urlsafe-base64';
 import * as hoteldata from '../../utils/hoteldata-format';
 import shoppingCarStore from '../../services/shopping-car-store';
+import moment from '../../utils/npm/moment';
 
 'use strict';
 let choose_year = null,
@@ -233,12 +234,12 @@ const conf = {
       days[oldChooseDayIndex].choosed = false;
       days[idx].choosed = true;
 
-      if (this.data.cur_month < 10) {
-        this.data.cur_month = '0' + this.data.cur_month;
-      }
-      if (curDay < 10) {
-        curDay = '0' + curDay;
-      }
+      // if (this.data.cur_month < 10) {
+      //   this.data.cur_month = '0' + this.data.cur_month;
+      // }
+      // if (curDay < 10) {
+      //   curDay = '0' + curDay;
+      // }
 
       this.setData({
         days,
@@ -317,7 +318,8 @@ const conf = {
       // 保存联系人 信息
       wx.setStorageSync('contacts', this.data.contacts);
       // 保存预订 日期
-      wx.setStorageSync('reservedDate', this.data.newDays);
+      var reservedDate = moment(this.data.newDays).format('YYYY-MM-DD');
+      wx.setStorageSync('reservedDate', reservedDate);
       // 宴会厅加入购物车
       this.joinShoppingCar();
   
@@ -326,7 +328,7 @@ const conf = {
       })
     }
 
-    console.log('newDays = ' + this.data.newDays);
+    console.log('newDays = ' + moment(this.data.newDays).format('YYYY-MM-DD'));
     console.log('contacts = ' + JSON.stringify(this.data.contacts));
     console.log('ballTablenNum = ' + this.data.ballInfo.tabNumsText);
 
