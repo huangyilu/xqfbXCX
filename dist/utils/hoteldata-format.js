@@ -99,8 +99,8 @@ export function formatWeddingTalentItem (item, talentname) {
     talentid: item.weddingTalentId,
     imgUrl: item.headImg,
     name: item.name,
-    praise: item.experience + '%好评',
-    transaction: item.goodReputation ? '交易:' + item.goodReputation + '次' : '交易:0次',
+    praise: item.goodReputation + '%好评',
+    transaction: item.experience ? '交易:' + item.experience + '次' : '交易:0次',
     price: item.price,
     selected: false,
     freeStatus: item.freeStatus

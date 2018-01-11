@@ -96,7 +96,8 @@ Page({
 
     this.setData({
       openId: wx.getStorageSync('openid').val,
-      prepayPercent: wx.getStorageSync('prepayPercent')
+      prepayPercent: wx.getStorageSync('prepayPercent'),
+      prepagetype: options.prepagetype ? options.prepagetype : ''
     })
 
   },
