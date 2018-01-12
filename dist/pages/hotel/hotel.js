@@ -41,7 +41,7 @@ const pageOptions = {
     // 取数据
     this.getHotelData();
 
-    wx.startPullDownRefresh()
+    
 
   },
 
@@ -51,7 +51,8 @@ const pageOptions = {
 
     // 取数据
     this.getHotelData();
-
+    
+    wx.startPullDownRefresh()
   },
 
   //页面跳转

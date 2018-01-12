@@ -246,6 +246,10 @@ Page({
       if (result == 'SUCCESS') {
         // 刷新 待付款
         this.getAppointments();
+        // 回到首页
+        wx.switchTab({
+          url: '../hotel/hotel',
+        })
       }
 
     }).catch((error) => {

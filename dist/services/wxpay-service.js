@@ -41,6 +41,30 @@ export function makeFinalPay(orderid, openid, obligation) {
   })
 }
 
+export function makePayment(payDic) {
+  return new Promise((resolve, reject) => {
+    getBrandWCPayRequestParams(payDic).then((orderParams) => {
+
+      if (orderParams.result) {
+
+        wx.setStorageSync('prepayOrderParams', orderParams)
+
+        return resolve(requestPayment(orderParams));
+
+      } else {
+
+        wx.showToast({
+          title: '下单失败!',
+          icon: 'success',
+          duration: 5000
+        })
+        return reject(orderParams.errorNum)
+      }
+
+    })
+  })
+}
+
 export function requestPayment(orderParams) {
   return new Promise((resolve, reject) => {
     wx.requestPayment({
@@ -74,39 +98,23 @@ export function requestPayment(orderParams) {
             duration: 5000
           })
           reject(false)
+        } else if (res.errMsg == 'requestPayment:cancel') {
+          wx.showToast({
+            title: '您已取消支付！',
+            icon: 'success',
+            duration: 5000
+          })
+          resolve(false)
         } else {
           wx.showToast({
             title: '支付失败!',
             icon: 'success',
             duration: 5000
           })
-          reject(false)
+          resolve(false)
         }
 
       }
     })
   })
-}
-
-export function makePayment(payDic) {
-  // return new Promise((resolve, reject) => {
-  return getBrandWCPayRequestParams(payDic).then((orderParams) => {
-      
-      if (orderParams.result) {
-
-        wx.setStorageSync('prepayOrderParams', orderParams)
-
-        return requestPayment(orderParams);
-
-      } else {
-        wx.showToast({
-          title: '下单失败!',
-          icon: 'success',
-          duration: 5000
-        })
-        return '下单失败'
-      }
-
-    })
-  // })
 }

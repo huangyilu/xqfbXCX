@@ -17,10 +17,10 @@
   <view class='rightScroll'>
     <scroll-view scroll-y style="height: {{ windowHeight }}px;" scroll-with-animation="true" >
       <block wx:for="{{ talentList }}" wx:for-item="talent" wx:key="{{ talent.talentid }}">
-        <view class="right-item" >
-          <view style='display:inline-block;' data-talentid='{{ talent.talentid }}' bindtap='goTalentDetailsPage'>
+        <view class="right-item" data-talentid='{{ talent.talentid }}' bindtap='goTalentDetailsPage'>
+          <view style='display:inline-block;'>
             <view class='avatar' >
-              <image src='{{ talent.imgUrl }}'></image>
+              <image mode='aspectFill' src='{{ talent.imgUrl }}'></image>
             </view>
             <view class='info'>
               <view>{{ talent.name }}</view>

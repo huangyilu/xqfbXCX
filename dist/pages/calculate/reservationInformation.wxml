@@ -1,6 +1,6 @@
 <!--pages/schedule/schedule.wxml-->
 
-<view class="flex box box-tb box-align-center" wx:if='{{ days.length > 0 }}'>
+<view class="flex box box-tb box-align-center bgview" wx:if='{{ days.length > 0 }}'>
   <view class="calendar box box-tb">
 
         <!-- 头部 -->
@@ -90,26 +90,3 @@
 
 </view>
 
-
-
-
-<view wx:if="{{ showPicker }}" class="box box-tb">
-  
-</view>
-
-<!-- 弹窗 -->
-
-<!-- 日期选择器 -->
-<!-- <view class='picker'>
-  <picker-view class="flex" indicator-style="height: 50px;" value="{{ reserveddateData.picker_value }}" bindchange="pickerChange">
-    <picker-view-column>
-      <view class="picker-view" wx:for="{{ reserveddateData.picker_year }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
-    </picker-view-column>
-    <picker-view-column>
-      <view class="picker-view" wx:for="{{ reserveddateData.picker_month }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
-    </picker-view-column>
-    <picker-view-column>
-      <view class="picker-view" wx:for="{{ reserveddateData.picker_day }}" wx:key="{{ item }}" style="line-height: 50px">{{ item }}</view>
-    </picker-view-column>
-  </picker-view>  
-</view> -->

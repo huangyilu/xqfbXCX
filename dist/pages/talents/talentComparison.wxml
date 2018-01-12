@@ -8,7 +8,7 @@
 
     <!-- 头部 -->
     <view class='panel-title'>
-      <image class='avatar' src='{{ comp.title.avatar }}'></image>
+      <image class='avatar' mode='aspectFill' src='{{ comp.title.avatar }}'></image>
       <view class='main-txt-color'>{{ comp.title.username }}<text class='identity'>{{ comp.title.identity }}</text></view>
       <view class='second-txt-color'>从业{{ comp.title.experience }}年</view>
       <view class='second-txt-color'>交易记录：{{ comp.title.transaction }}</view>
@@ -31,10 +31,10 @@
       <view class='pack-up' id='{{ compIndex }}' bindtap='bindIntroduceHiddenTap'>{{ comp.introduce.introduceHidden ? '展开' : '收起' }}<image src='{{ comp.introduce.introduceHidden ? "../../images/pack-down.png" : "../../images/pack-up.png" }}'></image></view>
     </view>
 
-    <!-- 策划风格 -->
+    <!-- 风格 -->
     <view class='style' wx:if='{{ comp.style.styles.length > 0 }}'>
-      <view class='title' style='border-left: 3px #3699FF solid;'>
-        <text>策划风格</text>
+      <view class='title' style='border-left: 3px #77C34F solid;'>
+        <text>风格</text>
       </view>
       <view class='content'>
         <view class='style-btn' wx:for="{{ comp.style.styles }}" wx:key="{{ index }}">{{ item }}</view>
@@ -64,7 +64,7 @@
       <view class='title'>
         <text>评论</text>
       </view>
-      <view class='content' wx:for="{{ comp.comment.showAllComsHidden ? comp.comment.allComs : comp.comment.coms }}" wx:key="{{ index }}" wx:for-item="com">
+      <view class='content' style='{{ index == comp.comment.coms.length ? "border-bottom-style: none;" : "" }}' wx:for="{{ comp.comment.showAllComsHidden ? comp.comment.allComs : comp.comment.coms }}" wx:key="{{ index }}" wx:for-item="com">
         <view>
           <image class='comment-avatar' src='{{ com.avatar }}'></image>
           <text class='comment-username'>{{ com.name }}</text>
@@ -76,7 +76,7 @@
         </view>
         <view class='third-txt-color'>{{ com.desc }}</view>
       </view>
-      <view class='pack-up' wx:if='{{ comp.comment.coms.length > 2  }}' bindtap='bindShowComsHiddenTap'>
+      <view class='pack-up' id='{{ compIndex }}' bindtap='bindShowComsHiddenTap'>
         {{ comp.comment.showAllComsHidden ? '收起' : '展开' }}
         <image src='{{ comp.comment.showAllComsHidden ? "../../images/pack-up.png" : "../../images/pack-down.png" }}'></image>
       </view>

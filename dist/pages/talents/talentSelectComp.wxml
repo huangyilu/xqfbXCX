@@ -10,7 +10,7 @@
       <checkbox class='checkbox' value="{{ index }}" checked="{{ talt.checked }}"/>
 
       <view class='avatar'>
-        <image src='{{ talt.avatar }}'></image>
+        <image mode='aspectFill' src='{{ talt.avatar }}'></image>
       </view>
       <view class='weui-flex__item'>
         <view>{{ talt.name }}</view>

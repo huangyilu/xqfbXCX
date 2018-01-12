@@ -5,7 +5,6 @@ import * as HotelDataService from '../../services/hotel-service';
 import { Base64 } from '../../utils/urlsafe-base64';
 import * as hoteldata from '../../utils/hoteldata-format';
 import shoppingCarStore from '../../services/shopping-car-store';
-import moment from '../../utils/npm/moment';
 
 'use strict';
 let choose_year = null,
@@ -19,6 +18,7 @@ const conf = {
     preStrHidden: true,
     nextStrHidden: false,
     newDays: '',
+    realDays: '',
 
     // 购物车
     shoppingcar: [],
@@ -227,6 +227,8 @@ const conf = {
 		const days = this.data.days;
     var oldChooseDayIndex = this.data.oldChooseDayIndex;
     var curDay = idx + 1;
+    var realDay = curDay;
+    var realMonth = this.data.cur_month;
 
     // 判断 是否 可预定 
     if (!days[idx].reserved) {
@@ -234,17 +236,18 @@ const conf = {
       days[oldChooseDayIndex].choosed = false;
       days[idx].choosed = true;
 
-      // if (this.data.cur_month < 10) {
-      //   this.data.cur_month = '0' + this.data.cur_month;
-      // }
-      // if (curDay < 10) {
-      //   curDay = '0' + curDay;
-      // }
+      if (this.data.cur_month < 10) {
+        realMonth = '0' + this.data.cur_month;
+      }
+      if (curDay < 10) {
+        realDay = '0' + curDay;
+      }
 
       this.setData({
         days,
         oldChooseDayIndex: idx,
-        newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + curDay
+        newDays: this.data.cur_year + '-' + this.data.cur_month + '-' + curDay,
+        realDays: this.data.cur_year + '-' + realMonth + '-' + realDay
       });
     }
 
@@ -318,17 +321,16 @@ const conf = {
       // 保存联系人 信息
       wx.setStorageSync('contacts', this.data.contacts);
       // 保存预订 日期
-      var reservedDate = moment(this.data.newDays).format('YYYY-MM-DD');
-      wx.setStorageSync('reservedDate', reservedDate);
+      wx.setStorageSync('reservedDate', this.data.realDays);
       // 宴会厅加入购物车
       this.joinShoppingCar();
   
       wx.navigateTo({
-        url: '../weddingTalent/weddingTalent?reservedDate=' + this.data.newDays
+        url: '../weddingTalent/weddingTalent?reservedDate=' + this.data.realDays
       })
     }
 
-    console.log('newDays = ' + moment(this.data.newDays).format('YYYY-MM-DD'));
+    console.log('newDays = ' + this.data.realDays);
     console.log('contacts = ' + JSON.stringify(this.data.contacts));
     console.log('ballTablenNum = ' + this.data.ballInfo.tabNumsText);
 

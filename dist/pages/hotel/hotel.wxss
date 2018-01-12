@@ -55,9 +55,9 @@
 }
 .header-text {
   color: white;
-  height: 125rpx;
+  height: 135rpx;
   /* margin-top: -140rpx; */
-  padding: 0 2.5% 10rpx;
+  padding: 0 2.5%;
   font-size: 18px;
   width: 95%;
   display: block;

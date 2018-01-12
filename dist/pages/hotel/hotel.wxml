@@ -9,7 +9,7 @@
   <view class='header'>
     
     <!-- 首页头部轮播图 -->
-    <swiper class='imgSwiper' indicator-dots="true" >
+    <swiper class='imgSwiper'>
     <block wx:for="{{ hotelInfo.hotelBgimg }}" wx:key="{{ index }}">
       <swiper-item>
         <image class='header-img' mode="widthFix" src="{{ item }}"/>

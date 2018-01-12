@@ -62,7 +62,7 @@ const methodNamesToPromisify = [
   // 'setNavigationBarTitle',
   // 'navigateTo',
   // 'redirectTo',
-  // 'switchTab',
+  'switchTab',
   // 'reLaunch',
   // 'canvasToTempFilePath',
   // 'getExtConfig',
