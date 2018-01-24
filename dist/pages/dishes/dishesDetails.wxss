@@ -198,12 +198,12 @@
     width: 90%;
     background-color: white;
     border-radius: 20rpx;
-    margin: 20% auto 20rpx;
+    margin: 15% auto 20rpx;
     overflow: hidden;
 }
 .dishes-view .img-view {
     width: 100%;
-    height: 500rpx;
+    /* height: 500rpx; */
     background-position:center;
     background-repeat:no-repeat;
 }

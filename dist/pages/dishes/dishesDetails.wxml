@@ -59,7 +59,7 @@
   <view class='dishes-view'>
   <!-- style='background-image: url( {{ dishesTc.img }} )' -->
     <view class='img-view' >
-      <image mode='aspectFill' src='{{ dishesTc.img }}'></image>
+      <image mode='widthFix' src='{{ dishesTc.img }}'></image>
     </view> 
     <view class='first-name'>{{ dishesTc.name }}</view>
     <view class='details-view'>主要食材：<text>{{ dishesTc.ingredient }}</text></view>

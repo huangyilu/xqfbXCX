@@ -37,9 +37,9 @@ Page({
       celebrationid: options.celebrationid,
       prepagetype: options.prepagetype ? options.prepagetype : ''
     })
-    // this.getCelebrationDetailsData(options.celebrationid);
+    this.getCelebrationDetailsData(options.celebrationid);
 
-    this.getCelebrationDetailsData(1);
+    // this.getCelebrationDetailsData(1);
     this.checkShoppingCar();
 
   },
