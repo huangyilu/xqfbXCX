@@ -25,6 +25,10 @@ export function getBrandWCFinalyPayRequestParams(orderid, openid, obligation) {
     obligation: obligation
   });
 }
+// 当价钱为0时 prepayWithNoPrice
+export function getBrandWCPayRequestParamWithO(dic) {
+  return urlencodePostRequest('pay/prepayWithNoPrice', dic);
+}
 
 export function makeFinalPay(orderid, openid, obligation) {
   return getBrandWCFinalyPayRequestParams(orderid, openid, obligation).then((orderParams) => {
@@ -38,6 +42,14 @@ export function makeFinalPay(orderid, openid, obligation) {
       })
       return false
     }
+  })
+}
+// 当价钱为0时
+export function makePaymentWithO(payDic) {
+  return new Promise((resolve, reject) => {
+    getBrandWCPayRequestParamWithO(payDic).then((orderParams) => {
+
+    })
   })
 }
 

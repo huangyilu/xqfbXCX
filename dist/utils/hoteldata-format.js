@@ -531,8 +531,8 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
     openId: openid ? openid : '',
     reservedDates: reservedDate ? reservedDate : '',
     desc: desc ? desc : '',
-    count: totalPrice ? totalPrice : '',
-    prePay: prepayPrice ? prepayPrice : ''
+    count: totalPrice ? totalPrice : 0,
+    prePay: prepayPrice ? prepayPrice : 0
   }
   var talentids = [];
 
