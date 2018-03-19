@@ -41,8 +41,6 @@ const pageOptions = {
     // 取数据
     this.getHotelData();
 
-    
-
   },
 
   //下拉刷新

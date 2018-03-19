@@ -85,6 +85,10 @@
         <image class='bg-img' mode='aspectFill' src='{{ banquet.imgUrl }}'></image>
         <view class='weui-flex text-view'>
           <view class='weui-flex__item left-text'>{{ banquet.name }}</view>
+          <!-- 是否显示 价格面议 -->
+          <!-- <view>
+            
+          </view> -->
           <view class='right-text'>¥ {{ banquet.price }}</view>
         </view>
         <view class='style-view'>
