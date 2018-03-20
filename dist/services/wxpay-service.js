@@ -25,14 +25,11 @@ export function getBrandWCFinalyPayRequestParams(orderid, openid, obligation) {
     obligation: obligation
   });
 }
-// 当价钱为0时 prepayWithNoPrice
-export function getBrandWCPayRequestParamWithO(dic) {
-  return urlencodePostRequest('pay/prepayWithNoPrice', dic);
-}
 
 export function makeFinalPay(orderid, openid, obligation) {
   return getBrandWCFinalyPayRequestParams(orderid, openid, obligation).then((orderParams) => {
     if (orderParams.result == true) {
+
       return requestPayment(orderParams);
     } else {
       wx.showToast({
@@ -44,14 +41,6 @@ export function makeFinalPay(orderid, openid, obligation) {
     }
   })
 }
-// 当价钱为0时
-export function makePaymentWithO(payDic) {
-  return new Promise((resolve, reject) => {
-    getBrandWCPayRequestParamWithO(payDic).then((orderParams) => {
-
-    })
-  })
-}
 
 export function makePayment(payDic) {
   return new Promise((resolve, reject) => {
@@ -59,9 +48,17 @@ export function makePayment(payDic) {
 
       if (orderParams.result) {
 
-        wx.setStorageSync('prepayOrderParams', orderParams)
-
-        return resolve(requestPayment(orderParams));
+        if (orderParams.payFlag) {
+          wx.setStorageSync('prepayOrderParams', orderParams)
+          return resolve(requestPayment(orderParams));
+        } else {
+          wx.showToast({
+            title: '预约成功!',
+            icon: 'success',
+            duration: 2000
+          })
+          return reject(orderParams.errorNum)
+        }
 
       } else {
 

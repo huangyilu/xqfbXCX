@@ -250,4 +250,7 @@ export function queryIsReserved(dateString, hallId) {
   })
 }
 
-// 真正支付接口
+// 我的界面 获取 背景图
+export function queryProfileBgImg() {
+  return jsonGetRequest('home/mineBg', {})
+}
