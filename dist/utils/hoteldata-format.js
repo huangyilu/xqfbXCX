@@ -8,7 +8,6 @@ export function formatHotelInfo(info) {
   return {
     hotelName: info.name,
     hotelScore: info.reputationLevel ? info.reputationLevel : 0,
-    // hotelComments: 10,
     hotelLocation: info.address,
     hotelDescription: info.descreption,
     hotelPhonecall: info.tel,
@@ -47,18 +46,6 @@ export function fomatBallroomInfo (item) {
     imgUrls: item.img.split(',')
   }
 }
-// 宴会厅 等 评论列表
-// export function formatHotelCommentList(list) {
-//   return list.map(item => this.formatHotelCommentListItem(item))
-// }
-// export function formatHotelCommentListItem(item) {
-//   return {
-//     avatar: item.headimg ? item.headimg : '../../images/menu_personal_inactive.png',
-//     name: item.nickName ? item.nickName : '某某',
-//     desc: item.commentContent ? item.commentContent : '好！',
-//     score: item.compLevel ? this.getScoreStart(item.compLevel) : this.getScoreStart(5)
-//   }
-// }
 
 // 首页婚礼人才
 export function formatHomeTalent (list) {
@@ -83,11 +70,7 @@ export function formatHomeTalentListItem (item) {
 
 // 婚礼人才
 export function formatWeddingTalentLeftTab (result) {
-  var arr = [];
-  result.forEach((res) => {
-    arr.push(res.occupation);
-  })
-  return arr;
+  return result.map(item => item.occupation)
 }
 export function formatWeddingTalent (list, talentname) {
   return list.map(item => this.formatWeddingTalentItem(item, talentname))
@@ -129,68 +112,49 @@ export function formatTalentDetails(result) {
 }
 // 人才详情 已被占用时间
 export function formatReservedList(list) {
-  return list.map(item => this.formatReservedItem(item));
-}
-export function formatReservedItem(item) {
-  return item.startTimeString + '-' + item.endTimeString
+  return list.map(item => item.startTimeString + '-' + item.endTimeString)
 }
 
-// 人才 详情评论
-// export function formatTalentDetailComment (list) {
-//   return list.map(comt => this.formatTalentDetailCommentItem(comt));
-// }
-// export function formatTalentDetailCommentItem (item) {
-//   return {
-//     avatar: item.img,
-//     name: item.nickName,
-//     desc: item.commentContent,
-//     score: this.getScoreStart(item.compLevel)
-//   }
-// }
 // 人才 更多图片
 export function formatTalentMorePic (list) {
-  return list.map(item => this.formatTalentMorePicItem(item));
-}
-export function formatTalentMorePicItem(item) {
-  return {
-    time: item.dateString,
-    urls: item.pictureList
-  }
+  return list.map(item => {
+    return {
+      time: item.dateString,
+      urls: item.pictureList
+    }
+  });
 }
 export function formatTalentMorePicBrowse (list) {
-  var newList = [];
+  let newList = [];
   list.forEach((datepic,i) => {
-      datepic.pictureList.forEach((pic,j) => {
-        var dic = {
-          id: i * 2 + j + 1,
-          url: pic.src,
-          time: datepic.dateString
-        };
-        newList.push(dic);
-      })
+    datepic.pictureList.forEach((pic,j) => {
+      newList.push({
+        id: i * 2 + j + 1,
+        url: pic.src,
+        time: datepic.dateString
+      });
+    })
   })
   return newList;
 }
 // 人才 更多视频
 export function formatTalentMoreVideo(list) {
-  return list.map(item => this.formatTalentMoreVideoItem(item));
-}
-export function formatTalentMoreVideoItem(item) {
-  return {
-    time: item.dateString,
-    urls: item.mediaList
-  }
+  return list.map(item => {
+    return {
+      time: item.dateString,
+      urls: item.mediaList
+    }
+  });
 }
 export function formatTalentMoreVideoBrowse(list) {
-  var newList = [];
+  let newList = [];
   list.forEach((datevideo, i) => {
     datevideo.mediaList.forEach((pic, j) => {
-      var dic = {
+      newList.push({
         id: (i + 1) * (j + 1),
         url: pic.vediosrc,
         time: datevideo.dateString
-      };
-      newList.push(dic);
+      });
     })
   })
   return newList;
@@ -251,38 +215,24 @@ export function getTalentStyle (style) {
 }
 // 人才对比 作品展示
 export function getTalentShowing (imgs,videos) {
-  var newArr = [];
+  let newArr = [];
   imgs.forEach(img => {
-    var dic = {
+    newArr.push({
       id: img.id,
       imgsrc: img.src,
       time: moment(img.uptime).format('YYYY-MM-DD')
-    }
-    newArr.push(dic);
+    });
   })
   videos.forEach(video => {
-    var dic = {
+    newArr.push({
       id: video.id,
       imgsrc: video.imgsrc,
       vediosrc: video.vediosrc,
       time: moment(video.uptime).format('YYYY-MM-DD')
-    }
-    newArr.push(dic);
+    });
   })
   return newArr;
 }
-// 人才对比 评论
-// export function getTalentComment (list) {
-//   return list.map(item => this.getTalentCommentItem(item))
-// }
-// export function getTalentCommentItem (item) {
-//   return {
-//     username: item.nickName,
-//     avarUrl: item.headimg,
-//     text: item.commentContent ? item.commentContent : '好！',
-//     score: this.getScoreStart(item.compLevel)
-//   }
-// }
 
 // 菜品
 export function formatWeddingmenu(list) {
@@ -306,7 +256,7 @@ export function formatDishesDetails (item) {
   }
 }
 export function formatDishesDetailsSwiper(dishesList){
-  var newList = [];
+  let newList = [];
   dishesList.map(dishes => {
     dishes.list.map(item => {
       newList.push(item);
@@ -391,15 +341,14 @@ export function formatCeleDetailMorePicItem(item) {
   }
 }
 export function formatCeleDetailMorePicBrowse(list) {
-  var newList = [];
+  let newList = [];
   list.forEach((datepic, i) => {
     datepic.celePictureList.forEach((pic, j) => {
-      var dic = {
+      newList.push({
         id: i * 2 + j + 1,
         url: pic.src,
         time: datepic.dateString
-      };
-      newList.push(dic);
+      });
     })
   })
   return newList;
@@ -415,15 +364,14 @@ export function formatCeleDetatilMoreVideoItem (item) {
   }
 }
 export function formatCeleMoreVideoBrowse(list) {
-  var newList = [];
+  let newList = [];
   list.forEach((datevideo, i) => {
     datevideo.celeMediaList.forEach((pic, j) => {
-      var dic = {
+      newList.push({
         id: (i + 1) * (j + 1),
         url: pic.vediosrc,
         time: datevideo.dateString
-      };
-      newList.push(dic);
+      });
     })
   })
   return newList;
@@ -463,7 +411,7 @@ export function formatShoppingcarItem(item, i, localTableNum) {
 export function formatShoppingcarInStore(list) {
   return list.map(item => this.formatShoppingcarInStoreItem(item))
 }
-export function formatShoppingcarInStoreItem (item) {
+export function formatShoppingcarInStoreItem(item) {
   return {
     title: item.title,
     content: item.content,
@@ -473,7 +421,7 @@ export function formatShoppingcarInStoreItem (item) {
 
 // 计算 价钱
 export function getAllItemPrice(content) {
-  var price = content.info.price ? content.info.price : 0;
+  let price = content.info.price ? content.info.price : 0;
   if (content.packageStage) {
     price = content.packageStage.packPrice;
     if (price != '价格面议') {
@@ -505,6 +453,7 @@ export function formatLocalShoppingcar(item, name, tableNum, packageStage, start
     selected: true
   }
 }
+// 因为字段名不统一，所以只能这么写了
 export function getLocalShoppingId(name, item) {
   if (name == '宴会厅') {
     return item.banquetHallId;
@@ -530,7 +479,7 @@ export function getLocalShoppingImgurl(name, item) {
 // 预付定金
 export function formatuploadPrepay(list, reservedDate, customerName, tel, gender, totalPrice, prepayPrice, hallTable, desc, comboStyle, isStage, celePrice, openid) {
   
-  var dic = {
+  let dic = {
     hotelId: +appConfig.hotelId,
     customerName: customerName ? customerName : '',
     tel: tel ? tel : '',
@@ -541,7 +490,7 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
     count: totalPrice ? totalPrice : 0,
     prePay: prepayPrice ? prepayPrice : 0
   }
-  var talentids = [];
+  let talentids = [];
 
   list.forEach(item => {
     if (item.title == '宴会厅') {
@@ -564,7 +513,6 @@ export function formatuploadPrepay(list, reservedDate, customerName, tel, gender
       dic.isStage = isStage;
     }
   })
-  console.log( 'return dic ... ' +JSON.stringify(dic));
   return dic
 }
 
@@ -587,7 +535,7 @@ export function formatMyorderAppointmentItem (item) {
 }
 export function formatAppList (hall, combo, celebration, talent) {
 
-  var newList = [];
+  let newList = [];
 
   if (hall) {
     hall.forEach(item => {
@@ -633,7 +581,7 @@ export function formatAppListItem(item, title, id) {
 // 我的订单 待付款 提交
 export function formatUploadMyOrderPrepay(list, reservedDate, customerName, tel, totalPrice, prepayPrice, hallTable, desc, comboStyle, isStage, celePrice, openid) {
 
-  var dic = {
+  let dic = {
     hotelId: +appConfig.hotelId,
     customerName: customerName ? customerName : '',
     tel: tel ? tel : '',
@@ -643,7 +591,7 @@ export function formatUploadMyOrderPrepay(list, reservedDate, customerName, tel,
     count: totalPrice ? totalPrice : '',
     prePay: prepayPrice ? prepayPrice : '',
   }
-  var talentids = [];
+  let talentids = [];
 
   // console.log(JSON.stringify(dic));
 
@@ -737,7 +685,7 @@ export function formatMessageListItem (item) {
 // 评价
 export function formatCommentEditList(hall, combo, celebration, talent) {
 
-  var newList = [];
+  let newList = [];
 
   if (hall) {
     hall.forEach(item => {
@@ -755,7 +703,7 @@ export function formatCommentEditList(hall, combo, celebration, talent) {
     })
   }
   if (talent) {
-    var dic = {
+    let dic = {
       title: '婚礼人才',
       talentlist: this.formatCommentTalentlist(talent),
       score: 0,
@@ -802,7 +750,7 @@ export function formatCommentTalentItem (item,j) {
 // 提交评价
 export function formatUploadComment(list, orderId, openId, nickName, synthelist, avatarUrl) {
 
-  var comdic = {};
+  let comdic = {};
   comdic.orderId = orderId;
   comdic.openId = openId;
   comdic.nickName = nickName;
@@ -810,7 +758,7 @@ export function formatUploadComment(list, orderId, openId, nickName, synthelist,
   comdic.syntheCommentLevel = this.formatUploadCommentLevelString(synthelist);
   
   list.forEach(item => {
-    var stringdic = {}
+    let stringdic = {}
     stringdic.commentContent = item.commentText;
     stringdic.compLevel = item.score;
     // item.uploadImgUrls.forEach(img => {
@@ -850,7 +798,7 @@ export function formatUploadComment(list, orderId, openId, nickName, synthelist,
 }
 // 计算 综合评分
 export function formatUploadCommentLevelString (list) {
-  var newScore = 0;
+  let newScore = 0;
   list.forEach(item => {
     newScore = newScore + item.score;
   })
@@ -875,8 +823,8 @@ export function formatCommentListItem(item) {
 
 // 取前N条 
 export function getTheTopN(list, n) {
-  var newList = [];
-  for (var i = 0; i < n; i++) {
+  let newList = [];
+  for (let i = 0; i < n; i++) {
     newList.push(list[i]);
   }
   if (list.length >= n) {
@@ -888,8 +836,8 @@ export function getTheTopN(list, n) {
 
 // 评分转换星星
 export function getScoreStart(score) {
-  var starts = ['', '', '', '', ''];
-  for (var i = 0; i < score; i++) {
+  let starts = ['', '', '', '', ''];
+  for (let i = 0; i < score; i++) {
     starts[i] = 'red';
   }
   return starts;
